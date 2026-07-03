@@ -1,23 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Technical Blog of Arvind Vadivelu - Insights on Backend Engineering, Microservices, and Scalability.">
-    <title>Arvind Vadivelu | Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Technical Blog of Arvind Vadivelu - Insights on Backend Engineering, Microservices, and Scalability.">
+    <title>Arvind Vadivelu | Architecture & Engineering</title>
+    
+    <!-- Icons -->
     <link rel="icon" type="image/png" href="/assests/Portfolio Title icon.png">
-
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@700;800&display=swap"
-        rel="stylesheet">
-
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -25,32 +34,35 @@
             theme: {
                 extend: {
                     colors: {
-                        signal: '#FFD02F', // Brand Yellow
-                        dark: {
-                            bg: '#050505',
-                            card: '#0F0F0F',
-                            border: '#1F1F1F'
-                        }
+                        signal: '#FFD02F',
+                        dark: { bg: '#050505', card: '#0a0a0a', border: '#1F1F1F' }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Inter Tight', 'sans-serif'],
-                    },
-                    borderRadius: {
-                        '4xl': '2.5rem',
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Inter', 'sans-serif'],
+                        display: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Inter', 'sans-serif'],
+                        mono: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
                     },
                     animation: {
-                        'float-slow': 'float 8s ease-in-out infinite',
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'blur-in': 'blurIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'slide-up': 'slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'scale-in': 'scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'noise': 'noise 1s steps(2) infinite',
+                        'shimmer': 'shimmer 2s infinite linear',
+                        'pop': 'pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        'spin-slow': 'spin 8s linear infinite'
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
-                            '50%': { transform: 'translateY(-20px) rotate(1deg)' },
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        blurIn: { '0%': { opacity: '0', filter: 'blur(20px)' }, '100%': { opacity: '1', filter: 'blur(0)' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(40px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        scaleIn: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
+                        shimmer: { '0%': { backgroundPosition: '-1000px 0' }, '100%': { backgroundPosition: '1000px 0' } },
+                        pop: { '0%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.3)' }, '100%': { transform: 'scale(1)' } },
+                        noise: {
+                            '0%, 100%': { transform: 'translate(0, 0)' }, '10%': { transform: 'translate(-5%, -5%)' },
+                            '20%': { transform: 'translate(-10%, 5%)' }, '30%': { transform: 'translate(5%, -10%)' },
+                            '40%': { transform: 'translate(-5%, 15%)' }, '50%': { transform: 'translate(-10%, 5%)' },
+                            '60%': { transform: 'translate(15%, 0)' }, '70%': { transform: 'translate(0, 15%)' },
+                            '80%': { transform: 'translate(3%, 35%)' }, '90%': { transform: 'translate(-10%, 10%)' }
                         }
                     }
                 }
@@ -59,508 +71,842 @@
     </script>
 
     <style>
-        /* CRITICAL: Force Dark Mode */
+        /* Apple Reset & Smoothness */
         body {
-            background-color: #050505;
-            color: #ffffff;
+            background-color: #050505; color: #f5f5f7;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior-y: none; position: relative;
         }
 
-        /* Typography Override for Blog Content */
-        .prose h3 {
-            font-family: 'Inter Tight', sans-serif;
-            font-weight: 700;
-            color: #fff;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
+        /* Premium Noise Texture */
+        .noise-overlay {
+            position: fixed; top: -50%; left: -50%; right: -50%; bottom: -50%;
+            width: 200%; height: 200%;
+            background: transparent url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.03; pointer-events: none; z-index: 9990; animation: noise 8s steps(10) infinite;
         }
 
-        .prose p {
-            color: #a3a3a3;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-            font-size: 1.05rem;
+        /* Spotlight Ambient Glow Cards */
+        .glow-card { position: relative; }
+        .glow-card::before {
+            content: ""; position: absolute; inset: -1px; border-radius: inherit;
+            background: radial-gradient(600px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(255, 208, 47, 0.25), transparent 40%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: -1; transition: background 0.3s;
         }
 
-        .prose ul {
-            list-style-type: disc;
-            padding-left: 1.5rem;
-            color: #a3a3a3;
-            margin-bottom: 1.5rem;
+        /* Animated Gradient Border for Hero */
+        .hero-border-wrap { position: relative; border-radius: inherit; overflow: hidden; }
+        .hero-border-wrap::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent 0%, transparent 40%, #FFD02F 50%, transparent 60%, transparent 100%);
+            animation: spin-slow 8s linear infinite; z-index: -2; opacity: 0.3;
         }
 
-        .prose li {
-            margin-bottom: 0.5rem;
+        /* Skeleton Loading Shimmer */
+        .skeleton {
+            background: #111; background-image: linear-gradient(to right, #111 0%, #222 20%, #111 40%, #111 100%);
+            background-repeat: no-repeat; background-size: 2000px 100%; animation: shimmer 2s infinite linear forwards;
         }
 
-        .prose code {
-            background-color: #1f1f1f;
-            color: #FFD02F;
-            padding: 0.2rem 0.4rem;
-            rounded: 0.3rem;
-            font-family: monospace;
-            font-size: 0.9em;
+        /* 3D Tilt Glare */
+        .glare {
+            position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
+            mix-blend-mode: overlay; z-index: 20;
         }
 
-        .prose pre {
-            background-color: #0a0a0a;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            overflow-x: auto;
-            border: 1px solid #1f1f1f;
-            margin-bottom: 2rem;
-        }
+        /* Fluid Typography & Prose */
+        .prose { transition: all 0.3s ease; }
+        .prose h2 { font-family: '-apple-system', 'BlinkMacSystemFont', sans-serif; font-weight: 700; color: #fff; margin-top: 3.5rem; margin-bottom: 1.2rem; font-size: clamp(1.5rem, 3vw, 2.2rem); letter-spacing: -0.015em; scroll-margin-top: 100px; }
+        .prose h3 { font-weight: 600; color: #f5f5f7; margin-top: 2.5rem; margin-bottom: 1rem; font-size: clamp(1.25rem, 2vw, 1.5rem); scroll-margin-top: 100px; }
+        .prose p { color: #a1a1a6; margin-bottom: 1.8rem; line-height: 1.75; font-weight: 400; letter-spacing: -0.01em; }
+        .prose strong { color: #fff; font-weight: 600; }
+        
+        .text-size-normal p { font-size: clamp(1.05rem, 1.5vw, 1.25rem); }
+        .text-size-large p { font-size: clamp(1.25rem, 1.8vw, 1.45rem); }
+        .text-size-xlarge p { font-size: clamp(1.45rem, 2vw, 1.7rem); }
 
-        /* Nav Active State */
-        .nav-active {
-            color: #FFD02F !important;
-            background-color: transparent !important;
-        }
+        /* Advanced Code Blocks & Syntax */
+        .prose pre { background: #111113; padding: 1.5rem; border-radius: 12px; overflow-x: auto; border: 1px solid #222; margin: 2rem 0; position: relative; }
+        .prose code { font-family: theme('fontFamily.mono'); color: #e5e5e5; font-size: 0.9em; }
+        .prose p code { background: #1d1d1f; padding: 0.2em 0.4em; border-radius: 6px; color: #FFD02F; }
+        .syn-keyword { color: #ec4899; font-weight: 500; } .syn-string { color: #34d399; } .syn-boolean { color: #a78bfa; font-weight: 500; } .syn-function { color: #60a5fa; }
 
-        /* Hide Scrollbar */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
+        /* Prose Images (Lightbox target) */
+        .prose img { border-radius: 1rem; margin: 2rem 0; cursor: zoom-in; transition: transform 0.3s; }
+        .prose img:hover { transform: scale(1.01); }
 
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        /* Glassmorphism */
+        .apple-glass { background: rgba(5, 5, 5, 0.72); backdrop-filter: saturate(180%) blur(30px); -webkit-backdrop-filter: saturate(180%) blur(30px); }
+        .apple-glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.1); }
+
+        /* Scrollbars */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        /* Native App Animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.32, 0.72, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .img-blur-in { filter: blur(20px); transition: filter 1s cubic-bezier(0.32, 0.72, 0, 1), transform 1s ease; }
+        .img-blur-in.loaded { filter: blur(0); }
+        .progress-ring__circle { transition: stroke-dashoffset 0.1s ease-out; transform: rotate(-90deg); transform-origin: 50% 50%; }
+        #main-nav { transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), background 0.4s ease; }
+        .nav-hidden { transform: translateY(-100%); }
+        .magnetic { transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1); will-change: transform; }
+        .toc-link.active { color: #FFD02F; border-left-color: #FFD02F; font-weight: 500; }
+        .animate-pop { animation: pop 0.4s ease-out forwards; }
+
+        /* Dynamic Island Toast */
+        #dynamic-island {
+            position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%) scale(0.9); opacity: 0;
+            background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 9999px;
+            padding: 0.5rem 1rem; z-index: 99999; display: flex; align-items: center; gap: 0.5rem; color: #fff;
+            transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1); pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+        #dynamic-island.show { transform: translateX(-50%) scale(1); opacity: 1; pointer-events: auto; }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed; inset: 0; z-index: 999999; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
+            display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.32, 0.72, 0, 1); cursor: zoom-out;
+        }
+        #lightbox.active { opacity: 1; pointer-events: auto; }
+        #lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); border-radius: 1rem;}
+        #lightbox.active img { transform: scale(1); }
     </style>
 </head>
 
-<body class="bg-dark-bg text-gray-100 font-sans antialiased transition-colors duration-300 pb-20 md:pb-0">
+<body class="bg-dark-bg text-gray-100 font-sans pb-20 md:pb-0 relative">
+    
+    <!-- Premium Noise Texture -->
+    <div class="noise-overlay"></div>
 
-    <div class="fixed top-0 left-0 w-full h-1 z-[60]">
-        <div id="scroll-progress" class="h-full bg-signal w-0 transition-all duration-100"></div>
+    <!-- Dynamic Island Notification (Level 70) -->
+    <div id="dynamic-island">
+        <i id="island-icon" class="w-4 h-4 text-signal"></i>
+        <span id="island-text" class="text-sm font-medium tracking-wide"></span>
     </div>
 
-    <nav
-        class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-[#0F0F0F]/90 backdrop-blur-xl border border-dark-border px-6 py-3 rounded-full shadow-2xl flex items-center gap-6 w-[95%] md:w-[90%] max-w-5xl justify-between md:justify-start">
-        <a href="/Home.html"
-            class="font-display font-bold text-xl tracking-tighter uppercase text-white flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-signal"></span>
-            ARVIND_V
-        </a>
+    <!-- Global Top Progress Bar -->
+    <div class="fixed top-0 left-0 w-full h-1 z-[70] bg-transparent pointer-events-none">
+        <div id="global-progress" class="h-full bg-signal w-0 transition-all duration-75 ease-out shadow-[0_0_10px_#FFD02F]"></div>
+    </div>
 
-        <div class="flex items-center gap-3 ml-auto">
-            <a href="/Home.html"
-                class="hidden sm:flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold text-white border border-dark-border hover:border-gray-500 hover:bg-dark-card transition-all">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Portfolio
+    <!-- Smart Apple Navigation -->
+    <nav class="fixed top-0 w-full z-50 border-b border-transparent apple-glass" id="main-nav">
+        <div class="max-w-[90rem] mx-auto px-6 h-14 md:h-16 flex items-center justify-between">
+            <a href="/Home.html" class="font-display font-semibold text-lg tracking-tight text-white flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <span class="w-2 h-2 rounded-full bg-signal animate-pulse shadow-[0_0_8px_#FFD02F]"></span>
+                ARVIND_V
             </a>
-        </div>
-    </nav>
 
-    <nav
-        class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[45] bg-[#0F0F0F]/95 backdrop-blur-2xl border border-dark-border px-6 py-3.5 rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.8)] flex items-center justify-between w-[85%] max-w-md">
-        <a href="/Home.html" class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors">
-            <i data-lucide="user" class="w-5 h-5"></i>
-        </a>
-        <a href="#" class="flex flex-col items-center gap-1 text-signal transition-colors relative"
-            onclick="window.scrollTo(0,0)">
-            <i data-lucide="layout-grid" class="w-5 h-5 relative z-10"></i>
-            <span class="absolute -bottom-2.5 w-1 h-1 rounded-full bg-signal"></span>
-        </a>
-        <button onclick="document.getElementById('search-input').focus(); window.scrollTo(0, 300);"
-            class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors">
-            <i data-lucide="search" class="w-5 h-5"></i>
-        </button>
-        <a href="https://github.com/Arvindvadivelu" target="_blank"
-            class="flex flex-col items-center gap-1 text-gray-500 hover:text-white transition-colors">
-            <i data-lucide="github" class="w-5 h-5"></i>
-        </a>
-    </nav>
-
-    <section class="relative pt-40 pb-20 px-6 overflow-hidden">
-        <div
-            class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-signal/5 rounded-full blur-[120px] pointer-events-none">
-        </div>
-
-        <div class="max-w-5xl mx-auto text-center relative z-10">
-            <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-dark-border bg-dark-card/50 backdrop-blur-md animate-fade-in"
-                style="animation-delay: 0.1s;">
-                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                <span class="text-xs font-bold uppercase tracking-widest text-gray-500">Engineering Log</span>
+            <div class="flex items-center gap-6">
+                <button onclick="Search.open()" class="group flex items-center gap-3 px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors text-sm text-gray-400 hover:text-white border border-transparent hover:border-white/10">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                    <span class="hidden md:inline">Search...</span>
+                    <kbd class="hidden md:inline-block font-mono text-[10px] bg-white/10 px-2 py-0.5 rounded ml-2 text-gray-300">⌘K</kbd>
+                </button>
+                <a href="/Home.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors hidden sm:block">Portfolio</a>
             </div>
+        </div>
+    </nav>
 
-            <h1 class="font-display font-bold text-5xl md:text-7xl tracking-tight leading-[1.1] mb-8 text-white animate-fade-in"
-                style="animation-delay: 0.2s;">
-                No Fluff. <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-signal to-yellow-600">
-                    Just Architecture.
-                </span>
+    <!-- MacOS Style Command Palette Search -->
+    <div id="search-palette" class="fixed inset-0 z-[100] hidden items-start justify-center pt-[15vh] px-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-xl opacity-0 transition-opacity duration-300" id="search-bg" onclick="Search.close()"></div>
+        <div class="w-full max-w-2xl bg-[#111113]/90 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden relative z-10 opacity-0 transform scale-95 transition-all duration-300" id="search-container">
+            <div class="flex items-center px-4 py-4 border-b border-white/5">
+                <i data-lucide="search" class="w-5 h-5 text-signal mr-3"></i>
+                <input type="text" id="search-input" placeholder="Search architecture or concepts..." 
+                    class="w-full bg-transparent border-none text-white text-lg focus:outline-none placeholder-gray-500 font-light" autocomplete="off">
+                <button onclick="Search.close()" class="text-xs text-gray-400 bg-white/5 hover:bg-white/10 hover:text-white px-2 py-1 rounded border border-white/10 ml-2 transition-colors">ESC</button>
+            </div>
+            <div id="search-results" class="max-h-[400px] overflow-y-auto custom-scrollbar p-2 hidden"></div>
+            <div id="search-empty" class="p-8 text-center text-gray-500 hidden font-light">No matching architecture found.</div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[45] apple-glass-panel px-8 py-4 rounded-full flex items-center justify-between w-[85%] max-w-sm shadow-[0_20px_40px_rgba(0,0,0,0.9)] border border-white/10">
+        <a href="/Home.html" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="user" class="w-5 h-5"></i></a>
+        <a href="#" class="text-signal transition-colors relative" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <i data-lucide="layout-grid" class="w-5 h-5"></i>
+            <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-signal shadow-[0_0_8px_#FFD02F]"></span>
+        </a>
+        <button onclick="Search.open()" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="search" class="w-5 h-5"></i></button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 md:pt-40 pb-16 md:pb-24 px-6 overflow-hidden flex flex-col items-center justify-center min-h-[45vh]">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-signal/15 rounded-full blur-[120px] pointer-events-none mix-blend-screen"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10 animate-blur-in">
+            <h1 class="font-display font-bold text-5xl md:text-7xl lg:text-[6.5rem] tracking-tighter leading-[1.05] mb-6 text-white drop-shadow-2xl">
+                Engineering <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-br from-[#FFD02F] via-[#F59E0B] to-[#92400E]">Without Limits.</span>
             </h1>
-
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed animate-fade-in font-light"
-                style="animation-delay: 0.3s;">
-                I got tired of boring tech blogs. This is my personal vault of the actual patterns, Spring Boot hacks,
-                and lessons I use to build Micro-SaaS and scalable systems.
+            <p class="text-xl md:text-2xl text-[#a1a1a6] max-w-2xl mx-auto leading-relaxed font-light tracking-tight animate-slide-up" style="animation-delay: 0.2s;">
+                A deep dive into Micro-SaaS architecture, high-performance systems, and category-defining infrastructure.
             </p>
         </div>
     </section>
 
-    <section class="px-6 pb-12">
-        <div
-            class="max-w-7xl mx-auto border-b border-dark-border pb-8 flex flex-col md:flex-row justify-between items-center gap-6">
-
-            <div class="flex flex-wrap justify-center gap-2" id="filter-container">
-                <button onclick="setFilter('all')"
-                    class="filter-btn active px-5 py-2 rounded-full text-sm font-bold border border-dark-border bg-signal text-black transition-all">
-                    All View
-                </button>
-                <button onclick="setFilter('backend')"
-                    class="filter-btn px-5 py-2 rounded-full text-sm font-bold border border-dark-border bg-dark-card text-gray-400 hover:text-white hover:border-gray-600 transition-all">
-                    Backend
-                </button>
-                <button onclick="setFilter('database')"
-                    class="filter-btn px-5 py-2 rounded-full text-sm font-bold border border-dark-border bg-dark-card text-gray-400 hover:text-white hover:border-gray-600 transition-all">
-                    Database
-                </button>
-                <button onclick="setFilter('system design')"
-                    class="filter-btn px-5 py-2 rounded-full text-sm font-bold border border-dark-border bg-dark-card text-gray-400 hover:text-white hover:border-gray-600 transition-all">
-                    System Design
-                </button>
+    <!-- Dynamic Articles Grid (Skeleton -> Auto-Adjusting & Spotlight) -->
+    <section class="px-4 md:px-8 pb-32">
+        <div class="max-w-[90rem] mx-auto">
+            <div id="hero-article-container" class="mb-8 md:mb-12 hero-border-wrap" onmousemove="Engine.handleGlow(event, this)" onmouseleave="Engine.resetGlow(this)">
+                <!-- Skeleton Loader Hero -->
+                <div class="w-full h-[50vh] md:h-[70vh] rounded-[2rem] md:rounded-[3rem] skeleton"></div>
             </div>
-
-            <div class="relative group w-full md:w-auto">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <i data-lucide="search"
-                        class="w-4 h-4 text-gray-500 group-focus-within:text-signal transition-colors"></i>
-                </div>
-                <input type="text" id="search-input" placeholder="Search articles..."
-                    class="w-full md:w-64 bg-dark-card border border-dark-border text-white text-sm rounded-full pl-10 pr-4 py-2.5 focus:outline-none focus:border-signal focus:ring-1 focus:ring-signal transition-all placeholder-gray-600">
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-fr">
+                <!-- Skeleton Loader Grid -->
+                <div class="h-96 rounded-[2rem] skeleton"></div>
+                <div class="h-96 rounded-[2rem] skeleton hidden md:block"></div>
+                <div class="h-96 rounded-[2rem] skeleton hidden lg:block"></div>
             </div>
         </div>
     </section>
 
-    <section class="px-6 pb-32 min-h-screen">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="articles-grid">
-        </div>
-
-        <div id="empty-state" class="hidden max-w-7xl mx-auto text-center py-20">
-            <i data-lucide="search-x" class="w-12 h-12 text-gray-600 mx-auto mb-4"></i>
-            <h3 class="text-xl font-bold text-white mb-2">No articles found</h3>
-            <p class="text-gray-500">Try adjusting your search or category filter.</p>
-        </div>
-    </section>
-
-    <section class="py-24 px-6 bg-[#080808] border-t border-dark-border">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="font-display font-bold text-4xl mb-6 text-white">Stay in the Loop</h2>
-            <p class="text-gray-400 mb-10 max-w-lg mx-auto" id="newsletter-message">
-                Get notified when I publish new articles about Backend Engineering, System Architecture, and Java.
+    <!-- Premium Newsletter -->
+    <section class="py-32 px-6 relative overflow-hidden bg-[#000]">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1f1a0a] via-black to-black opacity-60"></div>
+        <div class="max-w-2xl mx-auto text-center relative z-10 reveal">
+            <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                <i data-lucide="zap" class="w-8 h-8 text-signal"></i>
+            </div>
+            <h2 class="font-display font-bold text-4xl md:text-5xl mb-4 text-white tracking-tight">Stay synchronized.</h2>
+            <p class="text-lg text-[#a1a1a6] mb-10 font-light leading-relaxed">
+                Join the internal stream. Get notified about new architecture patterns, codebase teardowns, and Micro-SaaS strategies.
             </p>
-
-            <form id="newsletter-form"
-                class="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
-                <input type="email" id="newsletter-input" required placeholder="email@address.com"
-                    class="w-full bg-dark-card border border-dark-border text-white px-6 py-3 rounded-full focus:outline-none focus:border-signal focus:ring-1 focus:ring-signal transition-all placeholder-gray-600">
-
-                <button type="submit" id="newsletter-btn" class="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 rounded-full text-sm font-bold text-black 
-                        bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-500 
-                        border border-yellow-200/50
-                        shadow-[0_0_15px_-3px_rgba(250,204,21,0.6)] 
-                        hover:shadow-[0_0_25px_-5px_rgba(250,204,21,0.8)] 
-                        hover:scale-105 hover:-translate-y-0.5 
-                        transition-all duration-300 min-w-[140px]">
+            <form id="newsletter-form" class="relative max-w-md mx-auto group">
+                <input type="email" id="newsletter-input" required placeholder="Enter your email"
+                    class="w-full bg-[#111113]/80 backdrop-blur-md border border-white/10 text-white pl-6 pr-36 py-4 rounded-2xl focus:outline-none focus:border-signal/50 focus:bg-white/10 transition-all font-light text-lg shadow-inner">
+                <button type="submit" id="newsletter-btn" class="absolute right-2 top-2 bottom-2 px-6 rounded-xl font-medium text-black bg-white hover:bg-signal transition-colors duration-300 flex items-center gap-2">
                     Subscribe
                 </button>
             </form>
         </div>
     </section>
 
-    <footer class="bg-black text-white pt-24 pb-12 border-t border-dark-border">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-                <div>
-                    <h2 class="font-display font-bold text-3xl mb-4">Arvind Vadivelu</h2>
-                    <p class="text-gray-500 max-w-xs">Full Stack Developer focused on building impactful Micro SaaS
-                        products that solve overlooked real-world problems.</p>
+    <!-- Footer -->
+    <footer class="bg-[#000] text-[#a1a1a6] pt-16 pb-24 md:pb-12 border-t border-white/5">
+        <div class="max-w-[90rem] mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
+                <div class="max-w-sm">
+                    <h2 class="font-display font-bold text-2xl tracking-tight text-white mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-signal"></span>Arvind Vadivelu
+                    </h2>
+                    <p class="font-light text-sm leading-relaxed mb-4">Building category-defining digital infrastructure and solving real-world problems through Micro-SaaS.</p>
                 </div>
-                <div class="flex flex-col md:items-end gap-4">
-                    <a href="mailto:varvind2004@gmail.com"
-                        class="text-xl font-bold hover:text-signal transition-colors">varvind2004@gmail.com</a>
-                    <div class="flex gap-6">
-                        <a href="https://linkedin.com/in/arvindvadivelu" target="_blank"
-                            class="text-gray-500 hover:text-white transition-colors">LinkedIn</a>
-                        <a href="https://github.com/Arvindvadivelu" target="_blank"
-                            class="text-gray-500 hover:text-white transition-colors">GitHub</a>
+                <div class="flex flex-col md:text-right gap-1">
+                    <a href="mailto:varvind2004@gmail.com" class="text-white font-medium hover:text-signal transition-colors">varvind2004@gmail.com</a>
+                    <div class="flex gap-4 mt-3 md:justify-end">
+                        <a href="https://linkedin.com/in/arvindvadivelu" target="_blank" class="magnetic w-12 h-12 rounded-full bg-[#111113] flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors border border-white/5"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                        <a href="https://github.com/Arvindvadivelu" target="_blank" class="magnetic w-12 h-12 rounded-full bg-[#111113] flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors border border-white/5"><i data-lucide="github" class="w-5 h-5"></i></a>
                     </div>
                 </div>
             </div>
-            <div
-                class="border-t border-[#222] pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-                <p>&copy; <span id="year"></span> Arvind Vadivelu. All Rights Reserved.</p>
+            <div class="border-t border-white/10 pt-6 flex justify-between items-center text-xs font-light">
+                <p>&copy; <span id="year"></span> Arvind Vadivelu. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <div id="reader-modal" class="fixed inset-0 z-[100] hidden">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeReader()"></div>
+    <!-- Level 70 Native iOS App-Style Full-Bleed Reader Modal -->
+    <div id="reader-modal" class="fixed inset-0 z-[200] hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-xl opacity-0 transition-opacity duration-500" id="reader-bg" onclick="Reader.close()"></div>
 
-        <div class="absolute inset-y-0 right-0 w-full md:w-[800px] bg-[#080808] border-l border-dark-border shadow-2xl transform translate-x-full transition-transform duration-500 ease-in-out flex flex-col"
-            id="reader-content">
-
-            <div class="flex justify-between items-center p-6 border-b border-dark-border bg-[#080808] z-20">
-                <div class="flex items-center gap-3">
-                    <span id="modal-category"
-                        class="px-3 py-1 bg-gray-800 rounded-full text-xs font-bold text-signal uppercase tracking-wider">
-                        Category
-                    </span>
-                    <span id="modal-date" class="text-xs text-gray-500 font-bold uppercase tracking-widest">
-                        Date
-                    </span>
+        <!-- Scrollable Full-Page Wrapper -->
+        <div class="absolute inset-0 md:inset-x-[10%] md:top-4 flex gap-6" id="reader-wrapper">
+            
+            <!-- Main Content Sheet -->
+            <div class="flex-1 bg-[#050505] md:rounded-t-[2.5rem] shadow-[0_0_50px_rgba(0,0,0,1)] transform translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col overflow-hidden border-x border-t border-white/10 relative" id="reader-content">
+                
+                <!-- Fixed Top Nav (Glass Overlap) -->
+                <div class="absolute top-0 inset-x-0 flex justify-between items-center px-4 md:px-6 py-4 z-50 pointer-events-none bg-gradient-to-b from-black/60 via-black/30 to-transparent">
+                    <button onclick="Reader.close()" class="w-10 h-10 rounded-full apple-glass-panel flex items-center justify-center text-white pointer-events-auto hover:bg-white/20 transition-all border border-white/10 backdrop-blur-xl shadow-lg group">
+                        <i data-lucide="chevron-down" class="w-5 h-5 group-hover:translate-y-0.5 transition-transform"></i>
+                    </button>
                 </div>
-                <button onclick="closeReader()"
-                    class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors group">
-                    <i data-lucide="x" class="w-5 h-5 text-gray-400 group-hover:text-white"></i>
-                </button>
+
+                <!-- Scroll Area (rAF Optimized) -->
+                <div class="flex-1 overflow-y-auto custom-scrollbar" id="reader-scroll-area">
+                    
+                    <!-- Immersive 60vh Hero Header -->
+                    <div class="relative w-full h-[60vh] overflow-hidden shrink-0">
+                        <img id="modal-image" src="" class="w-full h-[120%] object-cover img-blur-in parallax-modal transform -translate-y-10" onload="this.classList.add('loaded')">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/40 to-[#050505]"></div>
+                    </div>
+
+                    <!-- Text Content -->
+                    <div class="px-6 md:px-16 -mt-24 relative z-10 pb-40 max-w-4xl mx-auto">
+                        <h1 id="modal-title" class="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-[1.1] tracking-tight drop-shadow-lg"></h1>
+                        
+                        <div class="flex items-center justify-between mb-12 pb-6 border-b border-white/10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-[#111] flex items-center justify-center text-signal font-semibold border border-white/10 shadow-inner">AV</div>
+                                <div>
+                                    <div class="text-white font-medium">Arvind Vadivelu</div>
+                                    <div class="text-sm text-gray-400 font-light flex items-center gap-2">
+                                        <span id="modal-date"></span> &middot; <span id="modal-readtime"></span>
+                                        <span id="modal-time-left" class="text-signal font-medium ml-2 opacity-0 transition-opacity"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Circular Progress Near Author -->
+                            <div class="relative w-12 h-12 flex items-center justify-center hidden sm:flex">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40" fill="transparent"></circle>
+                                    <circle id="modal-progress-ring" class="text-signal stroke-current" stroke-width="6" stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.1s ease-out;"></circle>
+                                </svg>
+                                <i data-lucide="book-open" class="absolute w-4 h-4 text-white"></i>
+                            </div>
+                        </div>
+
+                        <div id="modal-body" class="prose text-size-normal max-w-none"></div>
+                    </div>
+                </div>
+
+                <!-- Floating Glass Action Bar (Level 70) -->
+                <div id="floating-action-bar" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] z-50 pointer-events-none">
+                    <div class="pointer-events-auto apple-glass-panel rounded-full p-2 border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] flex items-center gap-2 backdrop-blur-2xl bg-black/40">
+                        <button onclick="Reader.cycleTextSize()" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Adjust Text Size">
+                            <span class="font-serif font-bold tracking-tighter text-[1.1rem]">aA</span>
+                        </button>
+                        <button onclick="Reader.toggleAudio()" id="btn-audio" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Listen">
+                            <i data-lucide="play" class="w-4.5 h-4.5" id="icon-audio"></i>
+                        </button>
+                        <button onclick="Reader.toggleLike()" id="btn-like" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Appreciate">
+                            <i data-lucide="heart" class="w-4.5 h-4.5" id="icon-like"></i>
+                        </button>
+                        <button onclick="Reader.toggleBookmark()" id="btn-bookmark" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Save">
+                            <i data-lucide="bookmark" class="w-4.5 h-4.5" id="icon-bookmark"></i>
+                        </button>
+                        <div class="w-px h-6 bg-white/20 mx-1"></div>
+                        <button onclick="Reader.share()" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Share">
+                            <i data-lucide="share" class="w-4.5 h-4.5"></i>
+                        </button>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="flex-1 overflow-y-auto p-8 md:p-12 custom-scrollbar pb-32 md:pb-12">
-                <h1 id="modal-title" class="font-display font-bold text-3xl md:text-5xl text-white mb-8 leading-tight">
-                    Article Title
-                </h1>
-
-                <img id="modal-image" src=""
-                    class="w-full h-64 md:h-80 object-cover rounded-3xl mb-12 shadow-lg opacity-90">
-
-                <div id="modal-body" class="prose max-w-none">
-                </div>
-
-                <div class="mt-16 pt-8 border-t border-dark-border flex items-center gap-4">
-                    <img src="/assests/Arvind V Profile.png" alt="Arvind V"
-                        class="w-12 h-12 rounded-full object-cover border border-dark-border">
-                    <div>
-                        <div class="text-white font-bold">Arvind Vadivelu</div>
-                        <div class="text-sm text-gray-500">Software Developer</div>
-                    </div>
+            <!-- Table of Contents Sidebar (Desktop Only) -->
+            <div class="hidden xl:flex flex-col w-64 pt-24 pr-4 transform translate-x-12 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]" id="reader-toc-panel">
+                <div class="sticky top-24">
+                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">On this page</h4>
+                    <nav id="modal-toc" class="flex flex-col border-l border-white/10 text-sm font-light space-y-1 relative"></nav>
                 </div>
             </div>
         </div>
     </div>
-    <div id="reader-modal" class="fixed inset-0 z-[100] hidden">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeReader()"></div>
 
-        <div class="absolute inset-y-0 right-0 w-full md:w-[800px] bg-[#080808] border-l border-dark-border shadow-2xl transform translate-x-full transition-transform duration-500 ease-in-out flex flex-col"
-            id="reader-content">
-
-            <div class="flex justify-between items-center p-6 border-b border-dark-border bg-[#080808] z-20">
-                <div class="flex items-center gap-3">
-                    <span id="modal-category"
-                        class="px-3 py-1 bg-gray-800 rounded-full text-xs font-bold text-signal uppercase tracking-wider">
-                        Category
-                    </span>
-                    <span id="modal-date" class="text-xs text-gray-500 font-bold uppercase tracking-widest">
-                        Date
-                    </span>
-                </div>
-                <button onclick="closeReader()"
-                    class="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors group">
-                    <i data-lucide="x" class="w-5 h-5 text-gray-400 group-hover:text-white"></i>
-                </button>
-            </div>
-
-            <div class="flex-1 overflow-y-auto p-8 md:p-12 custom-scrollbar pb-32 md:pb-12">
-                <h1 id="modal-title" class="font-display font-bold text-3xl md:text-5xl text-white mb-8 leading-tight">
-                    Article Title
-                </h1>
-
-                <img id="modal-image" src=""
-                    class="w-full h-64 md:h-80 object-cover rounded-3xl mb-12 shadow-lg opacity-90">
-
-                <div id="modal-body" class="prose max-w-none">
-                </div>
-
-                <div class="mt-16 pt-8 border-t border-dark-border flex items-center gap-4">
-                    <div
-                        class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold text-lg">
-                        AV
-                    </div>
-                    <div>
-                        <div class="text-white font-bold">Arvind Vadivelu</div>
-                        <div class="text-sm text-gray-500">Software Developer</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Image Lightbox (Level 70) -->
+    <div id="lightbox" onclick="Lightbox.close()">
+        <img id="lightbox-img" src="" alt="Zoomed view">
     </div>
 
-    <script src="articles.js"></script>
-
+    <!-- Article Data -->
     <script>
-        // Init Icons & Footer Year
-        lucide.createIcons();
+        const articles = [
+            {
+                id: 1,
+                title: "Architecting Micro-SaaS: From Idea to Digital Infrastructure",
+                desc: "An exclusive look into turning innovative concepts into functional startups. Examining how to construct robust, category-defining systems that solve unnoticed real-world problems.",
+                date: "April 12, 2026",
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2000",
+                content: "<h2>The Foundation of Micro-SaaS</h2><p>Building a successful Micro-SaaS isn't just about writing code; it's about solving specific, often overlooked problems with high precision. When developing systems like 'Mikrosolve' or 'Invenstack', the core directive is to build scalable infrastructure without the bloat of traditional monoliths.</p><img src='https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=2000' alt='Code architecture'><h3>Vibe Coding Methodology</h3><p>By leveraging natural language prompting in AI environments, we can architect software at unprecedented speeds. I provide the intent, constraints, and direction. The AI provides the architecture, logic, and execution clarity.</p><pre><code>// Vibe Coding Intent Constraint\nconst intent = {\n  goal: 'Build scalable user auth',\n  constraints: ['Zero-trust', 'JWT based', 'Redis caching'],\n  architecture: 'Serverless'\n};\n\nfunction initializeAuth(intent) {\n  if (intent.architecture === 'Serverless') {\n    return true;\n  }\n  return false;\n}</code></pre><h3>Scaling Infrastructure</h3><p>Ultimately, the goal is to build products that require minimal maintenance while delivering maximum value to the end user. This is the essence of category-defining digital infrastructure.</p>"
+            },
+            {
+                id: 2,
+                title: "Algorithmic Trading & HFT: Building Advanced Quant Bots",
+                desc: "Exploring the logic behind High-Frequency Trading (HFT) algorithms. A technical breakdown of implementing FVG (Fair Value Gap) models and lot size calculators for Bitcoin and Solana.",
+                date: "March 28, 2026",
+                image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=2000",
+                content: "<h2>The Quant Landscape</h2><p>Algorithmic trading demands microsecond precision and absolute mathematical certainty. In this breakdown, we look at implementing institutional strategies like the Fair Value Gap (FVG) model computationally.</p><h3>FVG Logic Implementation</h3><p>An FVG occurs when there is a significant pricing inefficiency in the market. To code this, we need to analyze three-candle formations and calculate the gap between the first candle's wick and the third candle's wick.</p><pre><code>def detect_fvg(candles):\n    for i in range(2, len(candles)):\n        candle1_high = candles[i-2]['high']\n        candle3_low = candles[i]['low']\n        if candle1_high < candle3_low:\n            return True # Bullish FVG\n    return False\n</code></pre><p>Coupled with dynamic SOLUSD lot size calculators based on strict risk management, these automated systems operate emotionlessly.</p>"
+            },
+            {
+                id: 3,
+                title: "Optimizing the 75-Day Engineering Roadmap",
+                desc: "A highly structured, time-optimized approach to mastering full-stack development and system design. How I structured an intense learning sprint to maximize output.",
+                date: "February 18, 2026",
+                image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=2000",
+                content: "<h2>The Sprint Mindset</h2><p>Consistency compounds. Entering a strict 75-day technical sprint requires ruthless prioritization. The goal is maximum comprehension in the least amount of time.</p><h3>The Checklist</h3><p>Breaking down complex topics like Machine Learning engineering and scalable backend architecture into daily, digestible tasks.</p><p>1. Week 1-2: Core Systems & Data Structures</p><p>2. Week 3-5: Advanced Backend Architecture</p><p>3. Week 6-8: ML Integration & Quant Systems</p><p>Combine this with physical discipline to maintain mental acuity throughout the sprint. This ensures the mind is as optimized as the code being written.</p>"
+            },
+            {
+                id: 4,
+                title: "Event-Driven Microservices with Kafka",
+                desc: "Decoupling monolithic architectures into hyper-scalable event-driven systems. Exploring the intricacies of producer-consumer patterns.",
+                date: "January 10, 2026",
+                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=2000",
+                content: "<h2>Breaking the Monolith</h2><p>Synchronous API calls are the bottleneck of modern web applications. By transitioning to an event-driven architecture using Kafka, systems can scale horizontally without blocking main threads.</p><h3>Producer Patterns</h3><p>This allows separate domains to handle their specific business logic asynchronously, creating a far more resilient infrastructure.</p>"
+            }
+        ];
+    </script>
+
+    <!-- Core Logic (Vanilla JS) Level 70 Edition -->
+    <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // --- 2. DYNAMIC RENDERING & SEARCH LOGIC ---
-        let currentFilter = 'all';
-        let searchQuery = '';
+        // 1. UTILITIES & TOAST SYSTEM
+        const Utils = {
+            calculateReadTime: (text) => Math.max(1, Math.ceil(text.replace(/<[^>]*>?/gm, '').split(/\s+/).length / 200)),
+            stripHtml: (html) => { let t = document.createElement("DIV"); t.innerHTML = html; return t.textContent || t.innerText || ""; }
+        };
 
-        function getCategoryColorClass(category) {
-            const cat = category.toLowerCase();
-            if (cat === 'system design') return 'text-signal';
-            if (cat === 'backend') return 'text-blue-400';
-            if (cat === 'database') return 'text-green-400';
-            return 'text-gray-400';
+        const Toast = {
+            island: document.getElementById('dynamic-island'),
+            icon: document.getElementById('island-icon'),
+            text: document.getElementById('island-text'),
+            timeout: null,
+            show: (message, lucideIconName, colorClass = 'text-signal') => {
+                clearTimeout(Toast.timeout);
+                Toast.icon.setAttribute('data-lucide', lucideIconName);
+                Toast.icon.className = `w-4 h-4 ${colorClass}`;
+                lucide.createIcons();
+                Toast.text.innerText = message;
+                Toast.island.classList.add('show');
+                Toast.timeout = setTimeout(() => Toast.island.classList.remove('show'), 3000);
+            }
+        };
+
+        // Network Observer
+        window.addEventListener('offline', () => Toast.show('You are offline. Cached mode active.', 'wifi-off', 'text-red-500'));
+        window.addEventListener('online', () => Toast.show('Connection restored.', 'wifi', 'text-green-400'));
+
+        // Lightbox Engine
+        const Lightbox = {
+            box: document.getElementById('lightbox'),
+            img: document.getElementById('lightbox-img'),
+            open: (src) => {
+                Lightbox.img.src = src; Lightbox.box.classList.add('active'); document.body.style.overflow = 'hidden';
+            },
+            close: () => {
+                Lightbox.box.classList.remove('active'); document.body.style.overflow = '';
+            },
+            setup: (container) => {
+                container.querySelectorAll('img').forEach(img => { img.onclick = () => Lightbox.open(img.src); });
+            }
+        };
+
+        // 2. rAF SCROLL ENGINE (Level 70 Optimization)
+        let globalTicking = false;
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            if (!globalTicking) {
+                window.requestAnimationFrame(() => {
+                    handleGlobalScroll();
+                    globalTicking = false;
+                });
+                globalTicking = true;
+            }
+        }, { passive: true });
+
+        function handleGlobalScroll() {
+            const current = window.pageYOffset;
+            const height = document.documentElement.scrollHeight - window.innerHeight;
+            const nav = document.getElementById('main-nav');
+            
+            // Progress Bar
+            if(height > 0) document.getElementById('global-progress').style.width = `${(current / height) * 100}%`;
+            
+            // Smart Nav
+            if (current <= 0) { nav.classList.remove('nav-hidden'); nav.classList.replace('apple-glass', 'bg-transparent'); nav.classList.replace('border-white/10', 'border-transparent'); }
+            else if (current > 50) { nav.classList.replace('bg-transparent', 'apple-glass'); nav.classList.replace('border-transparent', 'border-white/10'); }
+            
+            if (current > lastScroll && !nav.classList.contains('nav-hidden') && current > 100) nav.classList.add('nav-hidden');
+            else if (current < lastScroll && nav.classList.contains('nav-hidden')) nav.classList.remove('nav-hidden');
+            
+            // Parallax Hero (Main Page)
+            const heroImg = document.querySelector('.parallax-hero');
+            if (heroImg && current < window.innerHeight) heroImg.style.transform = `translateY(${current * 0.4}px)`;
+            
+            lastScroll = current;
         }
 
-        function renderGrid() {
-            const grid = document.getElementById('articles-grid');
-            const emptyState = document.getElementById('empty-state');
-            grid.innerHTML = '';
-
-            // Filter logic (Uses 'articles' variable from articles.js)
-            const filteredArticles = articles.filter(article => {
-                const matchesFilter = currentFilter === 'all' || article.category.toLowerCase() === currentFilter;
-                const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    article.desc.toLowerCase().includes(searchQuery.toLowerCase());
-                return matchesFilter && matchesSearch;
-            });
-
-            // Handle Empty State
-            if (filteredArticles.length === 0) {
-                grid.style.display = 'none';
-                emptyState.classList.remove('hidden');
-                return;
-            } else {
-                grid.style.display = 'grid';
-                emptyState.classList.add('hidden');
-            }
-
-            // Build HTML
-            filteredArticles.forEach((article, index) => {
-                const catColor = getCategoryColorClass(article.category);
-
-                const cardHtml = `
-                    <article class="post-card group flex flex-col bg-dark-card rounded-[2rem] border border-dark-border overflow-hidden hover:border-gray-700 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 animate-fade-in" style="animation-delay: ${index * 0.1}s">
-                        <div class="h-56 overflow-hidden relative">
-                            <div class="absolute top-4 left-4 z-20">
-                                <span class="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-xs font-bold ${catColor} uppercase tracking-wider">
-                                    ${article.category}
-                                </span>
+        // 3. ARTICLE RENDERING & ANIMATIONS
+        const Engine = {
+            init: () => {
+                setTimeout(() => { // Simulate App Load
+                    Engine.renderArticles(articles);
+                    Engine.setupScrollReveal();
+                    Engine.setupMagneticButtons();
+                    lucide.createIcons();
+                }, 800); 
+            },
+            handleGlow: (e, element) => {
+                const rect = element.getBoundingClientRect();
+                element.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                element.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+            },
+            resetGlow: (element) => {
+                element.style.setProperty('--mouse-x', `-500px`); element.style.setProperty('--mouse-y', `-500px`);
+            },
+            renderArticles: (data) => {
+                if(data.length === 0) return;
+                const heroContainer = document.getElementById('hero-article-container');
+                const gridContainer = document.getElementById('articles-grid');
+                const hero = data[0];
+                
+                heroContainer.innerHTML = '';
+                heroContainer.className = "glow-card reveal group cursor-pointer rounded-[2rem] md:rounded-[3rem] p-[1px] relative hero-border-wrap";
+                
+                heroContainer.innerHTML = `
+                    <div class="relative w-full h-[50vh] md:h-[70vh] rounded-[inherit] overflow-hidden bg-[#111] z-10" onclick="Reader.open(${hero.id})">
+                        <img src="${hero.image}" class="parallax-hero absolute inset-0 w-full h-[120%] -top-[10%] object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-70 group-hover:opacity-90">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8 md:p-16 w-full md:w-4/5 lg:w-3/4">
+                            <div class="flex items-center gap-3 text-sm font-bold text-signal mb-4 uppercase tracking-widest"><span>Latest Architecture</span></div>
+                            <h2 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-[1.1] tracking-tight group-hover:text-gray-200 transition-colors drop-shadow-md">${hero.title}</h2>
+                            <p class="text-lg md:text-xl text-gray-300 font-light leading-relaxed mb-6 line-clamp-2 md:line-clamp-3">${hero.desc}</p>
+                            <div class="flex items-center gap-4 text-gray-400 text-sm font-medium">
+                                <span>${hero.date}</span><span class="w-1.5 h-1.5 rounded-full bg-white/20"></span><span>${Utils.calculateReadTime(hero.content)} min read</span>
                             </div>
-                            <img src="${article.image}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100">
                         </div>
-                        <div class="p-8 flex-1 flex flex-col">
-                            <div class="mb-4 flex items-center gap-3 text-xs text-gray-500 font-medium uppercase tracking-widest">
-                                <span><i data-lucide="calendar" class="w-3 h-3 inline mr-1 mb-0.5"></i> ${article.date}</span>
-                                <span class="w-1 h-1 rounded-full bg-dark-border"></span>
-                                <span>${article.readTime}</span>
+                    </div>
+                `;
+
+                gridContainer.innerHTML = data.slice(1).map(article => `
+                    <article class="glow-card tilt-card reveal group flex flex-col h-full rounded-[2rem] p-[1px]" onclick="Reader.open(${article.id})" onmousemove="Engine.handleGlow(event, this)" onmouseleave="Engine.resetGlow(this)">
+                        <div class="flex flex-col h-full bg-[#0a0a0a] rounded-[inherit] overflow-hidden relative shadow-lg cursor-pointer z-10">
+                            <div class="relative w-full aspect-[4/3] md:aspect-video overflow-hidden shrink-0 border-b border-white/5">
+                                <img src="${article.image}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-70 group-hover:opacity-100">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                                <div class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 shadow-lg"><i data-lucide="arrow-up-right" class="w-5 h-5 text-white"></i></div>
+                                <div class="glare"></div>
                             </div>
-                            <h3 class="font-display font-bold text-2xl text-white mb-4 leading-tight group-hover:${catColor} transition-colors">
-                                ${article.title}
-                            </h3>
-                            <p class="text-gray-400 text-sm leading-relaxed mb-8 line-clamp-3">
-                                ${article.desc}
-                            </p>
-                            <div class="mt-auto">
-                                <button onclick="openReader(${article.id})" class="w-full py-4 rounded-xl border border-dark-border bg-[#0a0a0a] text-white font-bold text-sm hover:bg-white hover:text-black hover:border-white transition-all flex items-center justify-center gap-2 group-hover/btn">
-                                    Read Article <i data-lucide="arrow-right" class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"></i>
-                                </button>
+                            <div class="flex-1 flex flex-col p-6 md:p-8 relative z-10 bg-[#0a0a0a]">
+                                <h3 class="font-display font-bold text-2xl md:text-[1.7rem] text-white mb-4 leading-tight tracking-tight group-hover:text-signal transition-colors line-clamp-3">${article.title}</h3>
+                                <p class="text-[#a1a1a6] text-base leading-relaxed font-light line-clamp-3 mb-6">${article.desc}</p>
+                                <div class="mt-auto pt-6 border-t border-white/5 flex items-center justify-between text-xs text-gray-500 font-medium uppercase tracking-widest">
+                                    <span>${article.date}</span><span>${Utils.calculateReadTime(article.content)} min</span>
+                                </div>
                             </div>
                         </div>
                     </article>
-                `;
-                grid.innerHTML += cardHtml;
-            });
-
-            lucide.createIcons(); // Re-init icons for new HTML
-        }
-
-        // Search Listener
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            searchQuery = e.target.value;
-            renderGrid();
-        });
-
-        // Filter Button Logic
-        function setFilter(category) {
-            currentFilter = category.toLowerCase();
-
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('bg-signal', 'text-black', 'border-dark-border');
-                btn.classList.add('bg-dark-card', 'text-gray-400', 'border-dark-border');
-
-                if (btn.innerText.toLowerCase().includes(currentFilter) || (currentFilter === 'all' && btn.innerText.includes('All'))) {
-                    btn.classList.remove('bg-dark-card', 'text-gray-400');
-                    btn.classList.add('bg-signal', 'text-black');
-                }
-            });
-
-            renderGrid();
-        }
-
-        // --- 3. DYNAMIC NEWSLETTER SUBMISSION ---
-        document.getElementById('newsletter-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const btn = document.getElementById('newsletter-btn');
-            const input = document.getElementById('newsletter-input');
-            const msg = document.getElementById('newsletter-message');
-
-            // Loading State
-            btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin text-black"></i> Processing`;
-            lucide.createIcons();
-
-            // Simulate API Call delay
-            setTimeout(() => {
-                btn.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-black"></i> Subscribed`;
-                btn.classList.replace('bg-gradient-to-r', 'bg-green-500');
-                btn.classList.remove('from-yellow-200', 'via-yellow-400', 'to-yellow-500', 'border-yellow-200/50');
-                input.value = '';
-                msg.innerHTML = `<span class="text-green-400 font-medium">Success! You have been added to the stream.</span>`;
-                lucide.createIcons();
-            }, 1200);
-        });
-
-        // --- 4. MODAL LOGIC ---
-        const modal = document.getElementById('reader-modal');
-        const modalContent = document.getElementById('reader-content');
-
-        function openReader(id) {
-            const article = articles.find(a => a.id === id);
-
-            // Populate Data
-            const catColorClass = getCategoryColorClass(article.category);
-            const badge = document.getElementById('modal-category');
-            badge.innerText = article.category;
-            badge.className = `px-3 py-1 bg-gray-800 rounded-full text-xs font-bold uppercase tracking-wider ${catColorClass}`;
-
-            document.getElementById('modal-date').innerText = article.date;
-            document.getElementById('modal-title').innerText = article.title;
-            document.getElementById('modal-image').src = article.image;
-            document.getElementById('modal-body').innerHTML = article.content;
-
-            // Show Modal
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modalContent.classList.remove('translate-x-full');
-            }, 10);
-
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        }
-
-        function closeReader() {
-            modalContent.classList.add('translate-x-full');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto'; // Restore scrolling
-            }, 500);
-        }
-
-        // --- 5. SCROLL PROGRESS ---
-        window.onscroll = function () {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("scroll-progress").style.width = scrolled + "%";
+                `).join('');
+                Engine.setupTiltCards();
+            },
+            setupScrollReveal: () => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
+                }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+                document.querySelectorAll('.reveal:not(.active)').forEach(el => observer.observe(el));
+            },
+            setupMagneticButtons: () => {
+                if ('ontouchstart' in window) return;
+                document.querySelectorAll('.magnetic').forEach(btn => {
+                    btn.addEventListener('mousemove', (e) => {
+                        const rect = btn.getBoundingClientRect();
+                        btn.style.transform = `translate(${(e.clientX - rect.left - rect.width / 2) * 0.3}px, ${(e.clientY - rect.top - rect.height / 2) * 0.3}px)`;
+                    });
+                    btn.addEventListener('mouseleave', () => btn.style.transform = `translate(0px, 0px)`);
+                });
+            },
+            setupTiltCards: () => {
+                if ('ontouchstart' in window) return;
+                document.querySelectorAll('.tilt-card').forEach(card => {
+                    const imgContainer = card.querySelector('div.relative.aspect-\\[4\\/3\\]');
+                    const glare = card.querySelector('.glare');
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                        const cx = rect.width / 2, cy = rect.height / 2;
+                        imgContainer.style.transform = `perspective(1000px) rotateX(${((y - cy) / cy) * -4}deg) rotateY(${((x - cx) / cx) * 4}deg) scale3d(1.02, 1.02, 1.02)`;
+                        if(glare) {
+                            glare.style.opacity = '1';
+                            glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, transparent 60%)`;
+                        }
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        imgContainer.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                        if(glare) glare.style.opacity = '0';
+                    });
+                });
+            }
         };
 
-        // Initialize Grid on Load
-        renderGrid();
+        // 4. FULL PAGE NATIVE READER MODAL (Level 70)
+        const Reader = {
+            currentArticle: null, textSizeState: 0, speechSynth: window.speechSynthesis, totalMins: 0, readerTicking: false,
+            modal: document.getElementById('reader-modal'), bg: document.getElementById('reader-bg'),
+            content: document.getElementById('reader-content'), tocPanel: document.getElementById('reader-toc-panel'),
+            scrollArea: document.getElementById('reader-scroll-area'), progressRing: document.getElementById('modal-progress-ring'),
+            bodyContainer: document.getElementById('modal-body'), tocContainer: document.getElementById('modal-toc'),
+            floatingBar: document.getElementById('floating-action-bar'),
 
+            initScroll: () => {
+                Reader.scrollArea.addEventListener('scroll', () => {
+                    if (!Reader.readerTicking) {
+                        window.requestAnimationFrame(() => {
+                            Reader.handleScroll();
+                            Reader.readerTicking = false;
+                        });
+                        Reader.readerTicking = true;
+                    }
+                }, { passive: true });
+            },
+
+            open: (id) => {
+                Reader.currentArticle = articles.find(a => a.id === id);
+                if(!Reader.currentArticle) return;
+
+                Reader.totalMins = Utils.calculateReadTime(Reader.currentArticle.content);
+                document.getElementById('modal-title').innerText = Reader.currentArticle.title;
+                document.getElementById('modal-date').innerText = Reader.currentArticle.date;
+                document.getElementById('modal-readtime').innerText = `${Reader.totalMins} min read`;
+                document.getElementById('modal-time-left').style.opacity = '0';
+                
+                const img = document.getElementById('modal-image');
+                img.classList.remove('loaded');
+                img.style.transform = 'translateY(-10px)'; 
+                img.src = Reader.currentArticle.image;
+                
+                Reader.bodyContainer.innerHTML = Reader.currentArticle.content;
+                Reader.setupCodeBlocks(Reader.bodyContainer);
+                Reader.generateToC(Reader.bodyContainer);
+                Lightbox.setup(Reader.bodyContainer);
+                Reader.updateIcons();
+                Reader.resetAudio();
+
+                Reader.modal.classList.remove('hidden');
+                
+                // View Transitions (Spring feel)
+                setTimeout(() => {
+                    Reader.bg.classList.remove('opacity-0');
+                    Reader.content.classList.remove('translate-y-full');
+                    Reader.tocPanel.classList.remove('translate-x-12', 'opacity-0');
+                    Reader.floatingBar.classList.remove('translate-y-24', 'opacity-0');
+                }, 10);
+                
+                document.body.style.overflow = 'hidden'; 
+                Reader.scrollArea.scrollTop = 0;
+                Reader.handleScroll();
+            },
+
+            close: () => {
+                Reader.resetAudio();
+                Reader.bg.classList.add('opacity-0');
+                Reader.content.classList.add('translate-y-full');
+                Reader.tocPanel.classList.add('translate-x-12', 'opacity-0');
+                Reader.floatingBar.classList.add('translate-y-24', 'opacity-0');
+                setTimeout(() => {
+                    Reader.modal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                    Reader.currentArticle = null;
+                }, 500);
+            },
+
+            handleScroll: () => {
+                const scrollHeight = Reader.scrollArea.scrollHeight - Reader.scrollArea.clientHeight;
+                if(scrollHeight <= 0) return;
+                const scrollPos = Reader.scrollArea.scrollTop;
+                const progress = scrollPos / scrollHeight;
+                
+                Reader.progressRing.style.strokeDashoffset = 251.2 - (progress * 251.2);
+                
+                const timeLeftEl = document.getElementById('modal-time-left');
+                if (progress > 0.05 && progress < 0.95) {
+                    timeLeftEl.innerText = `(${Math.max(1, Math.ceil(Reader.totalMins * (1 - progress)))} min left)`;
+                    timeLeftEl.style.opacity = '1';
+                } else { timeLeftEl.style.opacity = '0'; }
+
+                const modalImg = document.querySelector('.parallax-modal');
+                if(modalImg && scrollPos < window.innerHeight) {
+                    modalImg.style.transform = `translateY(${(scrollPos * 0.4) - 10}px)`;
+                }
+                
+                let currentId = null;
+                Reader.bodyContainer.querySelectorAll('h2, h3').forEach(h => {
+                    if(h.offsetTop - 150 <= scrollPos) currentId = h.id;
+                });
+                Reader.tocContainer.querySelectorAll('a').forEach(a => {
+                    a.classList.remove('active');
+                    if(currentId && a.getAttribute('href') === `#${currentId}`) a.classList.add('active');
+                });
+            },
+
+            generateToC: (container) => {
+                const headings = container.querySelectorAll('h2, h3');
+                let html = '';
+                headings.forEach((h, i) => {
+                    h.id = `heading-${i}`;
+                    const padding = h.tagName.toLowerCase() === 'h2' ? 'pl-4' : 'pl-8 text-xs';
+                    html += `<a href="#${h.id}" class="toc-link block py-1.5 ${padding} border-l-2 border-transparent text-gray-400 hover:text-white transition-colors" onclick="event.preventDefault(); document.getElementById('reader-scroll-area').scrollTo({ top: document.getElementById('${h.id}').offsetTop - 80, behavior: 'smooth' });">${h.innerText}</a>`;
+                });
+                Reader.tocContainer.innerHTML = html;
+            },
+
+            setupCodeBlocks: (container) => {
+                container.querySelectorAll('pre').forEach(pre => {
+                    const btn = document.createElement('button');
+                    btn.className = 'absolute top-3 right-3 text-[10px] uppercase tracking-widest font-bold bg-white/10 hover:bg-white/20 text-gray-300 py-1.5 px-3 rounded-md transition-colors font-sans border border-white/5 z-10';
+                    btn.innerText = 'COPY';
+                    btn.onclick = () => {
+                        navigator.clipboard.writeText(pre.querySelector('code').innerText);
+                        Toast.show('Code copied to clipboard', 'copy');
+                        btn.innerText = 'COPIED';
+                        btn.classList.add('bg-signal/20', 'text-signal', 'border-signal/30');
+                        setTimeout(() => { btn.innerText = 'COPY'; btn.classList.remove('bg-signal/20', 'text-signal', 'border-signal/30'); }, 2000);
+                    };
+                    pre.appendChild(btn);
+
+                    const code = pre.querySelector('code');
+                    if(code) {
+                        code.innerHTML = code.innerHTML
+                            .replace(/\b(const|let|var|def|function|return|if|else|for|while|class|import|from)\b/g, '<span class="syn-keyword">$1</span>')
+                            .replace(/\b(true|false|null|True|False)\b/g, '<span class="syn-boolean">$1</span>')
+                            .replace(/('.*?'|".*?"|`.*?`)/g, '<span class="syn-string">$1</span>')
+                            .replace(/\b([a-zA-Z0-9_]+)(?=\()/g, '<span class="syn-function">$1</span>');
+                    }
+                });
+            },
+
+            toggleBookmark: () => {
+                if(!Reader.currentArticle) return;
+                let bms = JSON.parse(localStorage.getItem('av_bookmarks') || '[]');
+                const idx = bms.indexOf(Reader.currentArticle.id);
+                if (idx === -1) { bms.push(Reader.currentArticle.id); Toast.show('Saved to Bookmarks', 'bookmark', 'text-signal'); } 
+                else { bms.splice(idx, 1); Toast.show('Removed from Bookmarks', 'bookmark-minus', 'text-gray-400'); }
+                localStorage.setItem('av_bookmarks', JSON.stringify(bms));
+                Reader.updateIcons();
+                Reader.popButton('btn-bookmark');
+            },
+
+            toggleLike: () => {
+                if(!Reader.currentArticle) return;
+                let likes = JSON.parse(localStorage.getItem('av_likes') || '[]');
+                const idx = likes.indexOf(Reader.currentArticle.id);
+                if (idx === -1) { likes.push(Reader.currentArticle.id); Toast.show('Appreciation sent', 'heart', 'text-red-500'); } 
+                else { likes.splice(idx, 1); }
+                localStorage.setItem('av_likes', JSON.stringify(likes));
+                Reader.updateIcons();
+                Reader.popButton('btn-like');
+            },
+
+            popButton: (id) => {
+                const btn = document.getElementById(id);
+                btn.classList.remove('animate-pop');
+                void btn.offsetWidth;
+                btn.classList.add('animate-pop');
+            },
+
+            updateIcons: () => {
+                if(!Reader.currentArticle) return;
+                const id = Reader.currentArticle.id;
+                
+                const bms = JSON.parse(localStorage.getItem('av_bookmarks') || '[]');
+                const iconBm = document.getElementById('icon-bookmark');
+                if (bms.includes(id)) { iconBm.classList.add('fill-signal', 'text-signal'); iconBm.classList.remove('text-white'); } 
+                else { iconBm.classList.remove('fill-signal', 'text-signal'); iconBm.classList.add('text-white'); }
+
+                const likes = JSON.parse(localStorage.getItem('av_likes') || '[]');
+                const iconLike = document.getElementById('icon-like');
+                if (likes.includes(id)) { iconLike.classList.add('fill-red-500', 'text-red-500'); iconLike.classList.remove('text-white'); } 
+                else { iconLike.classList.remove('fill-red-500', 'text-red-500'); iconLike.classList.add('text-white'); }
+            },
+
+            cycleTextSize: () => {
+                Reader.textSizeState = (Reader.textSizeState + 1) % 3;
+                Reader.bodyContainer.classList.remove('text-size-normal', 'text-size-large', 'text-size-xlarge');
+                let sizeName = 'Normal';
+                if (Reader.textSizeState === 0) Reader.bodyContainer.classList.add('text-size-normal');
+                if (Reader.textSizeState === 1) { Reader.bodyContainer.classList.add('text-size-large'); sizeName = 'Large'; }
+                if (Reader.textSizeState === 2) { Reader.bodyContainer.classList.add('text-size-xlarge'); sizeName = 'Extra Large'; }
+                Toast.show(`Text size: ${sizeName}`, 'type');
+            },
+
+            toggleAudio: () => {
+                const icon = document.getElementById('icon-audio');
+                if (Reader.speechSynth.speaking) {
+                    Reader.speechSynth.cancel();
+                    icon.setAttribute('data-lucide', 'play'); lucide.createIcons();
+                    Toast.show('Audio stopped', 'square');
+                    return;
+                }
+                if(!Reader.currentArticle) return;
+                const text = `${Reader.currentArticle.title}. ${Utils.stripHtml(Reader.currentArticle.content)}`;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.onend = () => Reader.resetAudio();
+                Reader.speechSynth.speak(utterance);
+                icon.setAttribute('data-lucide', 'square'); lucide.createIcons();
+                Toast.show('Playing audio...', 'volume-2');
+            },
+            resetAudio: () => {
+                if(Reader.speechSynth) Reader.speechSynth.cancel();
+                const icon = document.getElementById('icon-audio');
+                if(icon) { icon.setAttribute('data-lucide', 'play'); lucide.createIcons(); }
+            },
+            share: async () => {
+                if (!Reader.currentArticle) return;
+                try { if (navigator.share) await navigator.share({ title: Reader.currentArticle.title, text: Utils.stripHtml(Reader.currentArticle.desc), url: window.location.href }); } catch (err) {}
+            }
+        };
+        
+        // Initialize Modal Scroll Event
+        Reader.initScroll();
+
+        // 5. COMMAND PALETTE SEARCH
+        const Search = {
+            open: () => {
+                document.getElementById('search-palette').classList.remove('hidden'); document.getElementById('search-palette').classList.add('flex');
+                setTimeout(() => { document.getElementById('search-bg').classList.remove('opacity-0'); document.getElementById('search-container').classList.remove('opacity-0', 'scale-95'); document.getElementById('search-input').focus(); }, 10);
+                document.body.style.overflow = 'hidden';
+            },
+            close: () => {
+                document.getElementById('search-bg').classList.add('opacity-0'); document.getElementById('search-container').classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    document.getElementById('search-palette').classList.add('hidden'); document.getElementById('search-palette').classList.remove('flex');
+                    document.body.style.overflow = ''; document.getElementById('search-input').value = ''; document.getElementById('search-results').innerHTML = ''; document.getElementById('search-results').classList.add('hidden'); document.getElementById('search-empty').classList.add('hidden');
+                }, 300);
+            },
+            handleInput: (e) => {
+                const query = e.target.value.toLowerCase();
+                const resArea = document.getElementById('search-results'), empty = document.getElementById('search-empty');
+                if(!query) { resArea.classList.add('hidden'); empty.classList.add('hidden'); return; }
+                const results = articles.filter(a => a.title.toLowerCase().includes(query) || a.desc.toLowerCase().includes(query) || a.content.toLowerCase().includes(query));
+                if (results.length === 0) { resArea.classList.add('hidden'); empty.classList.remove('hidden'); } 
+                else {
+                    empty.classList.add('hidden'); resArea.classList.remove('hidden');
+                    resArea.innerHTML = results.map(a => `
+                        <div class="flex items-center gap-4 p-3 hover:bg-white/5 rounded-xl cursor-pointer transition-colors group" onclick="Search.close(); setTimeout(() => Reader.open(${a.id}), 300);">
+                            <img src="${a.image}" class="w-16 h-16 rounded-lg object-cover border border-white/10">
+                            <div class="flex-1 overflow-hidden">
+                                <h4 class="text-white font-medium group-hover:text-signal transition-colors truncate">${a.title}</h4>
+                                <p class="text-xs text-gray-500 truncate mt-1">${a.desc}</p>
+                            </div>
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-gray-600 shrink-0 group-hover:translate-x-1 transition-transform group-hover:text-signal"></i>
+                        </div>
+                    `).join(''); lucide.createIcons();
+                }
+            }
+        };
+        document.getElementById('search-input').addEventListener('input', Search.handleInput);
+        document.addEventListener('keydown', (e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); Search.open(); } if (e.key === 'Escape') { Search.close(); Reader.close(); Lightbox.close(); } });
+
+        // 6. NEWSLETTER
+        document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('newsletter-btn'), input = document.getElementById('newsletter-input');
+            btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin text-black"></i>`; lucide.createIcons();
+            setTimeout(() => { 
+                input.value = ''; btn.innerHTML = `Subscribe`; 
+                Toast.show('Subscribed to stream successfully', 'check-circle');
+            }, 1000);
+        });
+
+        // Boot
+        document.addEventListener('DOMContentLoaded', Engine.init);
     </script>
 </body>
-
+</html>
+    
+  </body>
+  
 </html>
