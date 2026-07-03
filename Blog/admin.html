@@ -8,14 +8,23 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { background-color: #050505; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
-        .input-field { width: 100%; background: #0a0a0a; border: 1px solid #1F1F1F; padding: 0.85rem; border-radius: 0.75rem; color: white; margin-top: 0.5rem; outline: none; transition: all 0.2s; }
+        .input-field { width: 100%; background: #0a0a0a; border: 1px solid #1F1F1F; padding: 0.85rem; border-radius: 0.75rem; color: white; outline: none; transition: all 0.2s; }
         .input-field:focus { border-color: #FFD02F; box-shadow: 0 0 10px rgba(255, 208, 47, 0.1); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        
+        /* Preview Styling (Mimicking blog.html) */
+        .prose h2 { font-weight: 700; color: #fff; margin-top: 2rem; margin-bottom: 1rem; font-size: 2rem; }
+        .prose h3 { font-weight: 600; color: #f5f5f7; margin-top: 1.5rem; margin-bottom: 0.8rem; font-size: 1.5rem; }
+        .prose p { color: #a1a1a6; margin-bottom: 1.5rem; line-height: 1.75; font-size: 1.1rem; }
+        .prose strong { color: #fff; font-weight: 600; }
+        .prose pre { background: #111; padding: 1.5rem; border-radius: 12px; overflow-x: auto; border: 1px solid #222; margin: 1.5rem 0; }
+        .prose code { font-family: monospace; color: #e5e5e5; }
+        .prose p code { background: #1d1d1f; padding: 0.2em 0.4em; border-radius: 6px; color: #FFD02F; }
     </style>
 </head>
-<body class="p-4 md:p-8 h-screen flex flex-col overflow-hidden">
+<body class="p-4 md:p-8 h-screen flex flex-col overflow-hidden relative">
 
     <!-- Header -->
     <div class="flex items-center justify-between mb-8 shrink-0">
@@ -30,7 +39,7 @@
         </div>
     </div>
 
-    <!-- Main Dashboard (Hidden until connected) -->
+    <!-- Main Dashboard -->
     <div id="dashboard" class="hidden flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-0">
         
         <!-- Sidebar: Article List -->
@@ -41,19 +50,20 @@
                     <i data-lucide="plus-square" class="w-5 h-5"></i>
                 </button>
             </div>
-            <div id="article-list" class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-2">
-                <!-- Articles injected here -->
-            </div>
+            <div id="article-list" class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-2"></div>
         </div>
 
         <!-- Editor Area -->
-        <div class="lg:col-span-8 flex flex-col bg-[#0a0a0a] border border-[#1F1F1F] rounded-2xl overflow-hidden">
+        <div class="lg:col-span-8 flex flex-col bg-[#0a0a0a] border border-[#1F1F1F] rounded-2xl overflow-hidden relative">
             <div class="p-4 border-b border-[#1F1F1F] flex justify-between items-center bg-[#050505]">
                 <h2 id="editor-title" class="font-semibold text-gray-300 uppercase tracking-widest text-xs">Create New Article</h2>
                 <div class="flex items-center gap-3">
-                    <span id="save-status" class="text-xs text-gray-500 font-medium"></span>
+                    <span id="save-status" class="text-xs text-gray-500 font-medium hidden md:block"></span>
+                    <button onclick="CMS.previewArticle()" class="bg-white/10 text-white hover:bg-white/20 border border-white/10 px-4 py-2 rounded-full font-bold transition-colors flex items-center gap-2 text-sm">
+                        <i data-lucide="eye" class="w-4 h-4"></i> Preview
+                    </button>
                     <button id="save-btn" onclick="CMS.saveArticle()" class="bg-[#FFD02F] text-black hover:bg-yellow-500 px-6 py-2 rounded-full font-bold transition-colors flex items-center gap-2 text-sm shadow-[0_0_15px_rgba(255,208,47,0.3)]">
-                        <i data-lucide="save" class="w-4 h-4"></i> Save & Publish
+                        <i data-lucide="save" class="w-4 h-4"></i> Save
                     </button>
                 </div>
             </div>
@@ -63,18 +73,26 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="md:col-span-2">
-                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block">Article Title</label>
+                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block mb-2">Article Title</label>
                         <input type="text" id="title" class="input-field text-lg font-medium" placeholder="e.g. Architecting Micro-SaaS...">
                     </div>
                     
                     <div class="md:col-span-2">
-                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block">Short Description</label>
+                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block mb-2">Short Description</label>
                         <input type="text" id="desc" class="input-field" placeholder="A 2-line summary for the card...">
                     </div>
                     
+                    <!-- Advanced Image Handler -->
                     <div class="md:col-span-2">
-                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block">Cover Image URL</label>
-                        <input type="text" id="image" class="input-field" placeholder="Leave empty for no image, or paste a URL...">
+                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block mb-2">Cover Image (URL or Upload)</label>
+                        <div class="flex items-center gap-3">
+                            <input type="text" id="image" class="input-field flex-1" placeholder="Paste image URL here...">
+                            <label class="cursor-pointer bg-[#111] hover:bg-[#222] border border-[#1F1F1F] text-white px-4 py-[0.85rem] rounded-xl font-medium transition-colors text-sm flex items-center gap-2 shrink-0">
+                                <i data-lucide="upload-cloud" class="w-4 h-4"></i> Upload Image
+                                <input type="file" id="image-upload" accept="image/*" class="hidden" onchange="CMS.handleImageUpload(event)">
+                            </label>
+                        </div>
+                        <img id="image-preview" src="" class="h-32 w-48 object-cover rounded-lg mt-3 hidden border border-[#1F1F1F] shadow-lg">
                     </div>
                     
                     <div class="md:col-span-2">
@@ -82,17 +100,43 @@
                             <span>Content (Auto-Formatted)</span>
                             <span class="text-gray-600 font-normal normal-case">Use # for headings. Hit enter twice for paragraphs.</span>
                         </label>
-                        <textarea id="content" rows="15" class="input-field font-mono text-sm leading-relaxed" placeholder="Write your blog post naturally here..."></textarea>
+                        <textarea id="content" rows="12" class="input-field font-mono text-sm leading-relaxed" placeholder="Write your blog post naturally here..."></textarea>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Live Preview Modal -->
+    <div id="preview-modal" class="fixed inset-0 bg-[#050505]/95 backdrop-blur-md z-[100] hidden overflow-y-auto custom-scrollbar opacity-0 transition-opacity duration-300">
+        <div class="max-w-4xl mx-auto py-12 px-6 relative">
+            <button onclick="CMS.closePreview()" class="fixed top-6 right-6 bg-white/10 border border-white/10 p-3 rounded-full hover:bg-white/20 text-white shadow-xl z-50 transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <div class="flex items-center gap-2 mb-8 border-b border-white/10 pb-4">
+                <div class="w-2 h-2 rounded-full bg-[#FFD02F] animate-pulse"></div>
+                <h2 class="text-gray-400 text-sm tracking-widest font-bold uppercase">Live Reader Preview</h2>
+            </div>
+
+            <!-- Preview Header -->
+            <div class="relative w-full h-[50vh] rounded-[2rem] overflow-hidden shrink-0 mb-12 border border-white/10">
+                <img id="pv-image" src="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-black/40 to-transparent"></div>
+                <div class="absolute bottom-10 left-10 right-10">
+                    <h1 id="pv-title" class="font-bold text-5xl md:text-6xl text-white mb-4 leading-tight tracking-tight"></h1>
+                    <p id="pv-desc" class="text-xl text-gray-300 font-light"></p>
+                </div>
+            </div>
+
+            <!-- Preview Body -->
+            <div id="pv-body" class="prose max-w-none px-4 md:px-10 pb-32"></div>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
 
-        // IndexedDB Helper to remember the file handle securely
         const DB = {
             init: () => {
                 return new Promise((resolve, reject) => {
@@ -131,6 +175,11 @@
                     `;
                     lucide.createIcons();
                 }
+                
+                // Add input listener to preview image URL instantly
+                document.getElementById('image').addEventListener('input', (e) => {
+                    CMS.showThumbnail(e.target.value);
+                });
             },
 
             connect: async () => {
@@ -213,6 +262,7 @@
                 document.getElementById('image').value = "";
                 document.getElementById('content').value = "";
                 document.getElementById('editor-title').innerText = "Create New Article";
+                CMS.showThumbnail("");
             },
 
             loadArticle: (id) => {
@@ -222,7 +272,10 @@
                 document.getElementById('edit-id').value = article.id;
                 document.getElementById('title').value = article.title;
                 document.getElementById('desc').value = article.desc;
-                document.getElementById('image').value = article.image || ""; 
+                
+                const imgVal = article.image || "";
+                document.getElementById('image').value = imgVal; 
+                CMS.showThumbnail(imgVal);
                 
                 let editableContent = article.content
                     .replace(/<h2>/g, '# ')
@@ -239,6 +292,31 @@
                 document.getElementById('editor-title').innerText = "Editing: " + article.title;
             },
 
+            // Auto Image Converter (Local to Base64)
+            handleImageUpload: (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64String = e.target.result;
+                    document.getElementById('image').value = base64String;
+                    CMS.showThumbnail(base64String);
+                };
+                reader.readAsDataURL(file);
+            },
+
+            showThumbnail: (src) => {
+                const preview = document.getElementById('image-preview');
+                if(src && src.trim() !== "") {
+                    preview.src = src;
+                    preview.classList.remove('hidden');
+                } else {
+                    preview.src = "";
+                    preview.classList.add('hidden');
+                }
+            },
+
             deleteArticle: async (id) => {
                 if(!confirm("Are you sure you want to delete this article?")) return;
                 CMS.articles = CMS.articles.filter(a => a.id !== id);
@@ -247,11 +325,52 @@
                 CMS.startNew();
             },
 
+            // Central Markdown Engine
+            parseMarkdown: (rawContent) => {
+                let html = rawContent;
+                html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+                html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
+                html = html.replace(/^# (.*$)/gim, '<h2>$1</h2>');
+                html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                html = html.replace(/\`([^`]+)\`/g, '<code>$1</code>');
+                
+                html = html.split('\n\n').map(p => {
+                    const trimmed = p.trim();
+                    if (trimmed === '') return '';
+                    if (/^<(pre|h2|h3|img|div)/.test(trimmed)) return trimmed;
+                    return '<p>' + trimmed.replace(/\n/g, '<br>') + '</p>';
+                }).join('');
+                return html;
+            },
+
+            // Preview UI
+            previewArticle: () => {
+                const title = document.getElementById('title').value || "Untitled Article";
+                const desc = document.getElementById('desc').value || "Description goes here...";
+                const image = document.getElementById('image').value || "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=2000";
+                const rawContent = document.getElementById('content').value;
+
+                document.getElementById('pv-title').innerText = title;
+                document.getElementById('pv-desc').innerText = desc;
+                document.getElementById('pv-image').src = image;
+                document.getElementById('pv-body').innerHTML = CMS.parseMarkdown(rawContent);
+
+                const modal = document.getElementById('preview-modal');
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            },
+
+            closePreview: () => {
+                const modal = document.getElementById('preview-modal');
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            },
+
+            // Save Pipeline
             saveArticle: async () => {
                 const btn = document.getElementById('save-btn');
                 const originalText = btn.innerHTML;
                 
-                // Execution Lock
                 btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Processing...`;
                 btn.disabled = true; 
 
@@ -260,28 +379,11 @@
                     if(!title) { alert("Title is required!"); return; }
 
                     const desc = document.getElementById('desc').value.trim();
-                    
-                    // Fixed Image Fallback: Saves exactly what is provided (or empty string)
                     const image = document.getElementById('image').value.trim();
-                    
                     const rawContent = document.getElementById('content').value.trim();
                     const editId = document.getElementById('edit-id').value;
 
-                    // --- Dynamic Markdown Parser ---
-                    let parsedHTML = rawContent;
-                    
-                    parsedHTML = parsedHTML.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-                    parsedHTML = parsedHTML.replace(/^## (.*$)/gim, '<h3>$1</h3>');
-                    parsedHTML = parsedHTML.replace(/^# (.*$)/gim, '<h2>$1</h2>');
-                    parsedHTML = parsedHTML.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-                    parsedHTML = parsedHTML.replace(/\`([^`]+)\`/g, '<code>$1</code>');
-                    
-                    parsedHTML = parsedHTML.split('\n\n').map(p => {
-                        const trimmed = p.trim();
-                        if (trimmed === '') return '';
-                        if (/^<(pre|h2|h3|img|div)/.test(trimmed)) return trimmed;
-                        return '<p>' + trimmed.replace(/\n/g, '<br>') + '</p>';
-                    }).join('');
+                    const parsedHTML = CMS.parseMarkdown(rawContent);
 
                     const articleObj = {
                         id: editId ? parseInt(editId) : Date.now(),
@@ -300,13 +402,11 @@
                         CMS.articles.unshift(articleObj); 
                     }
 
-                    // Await the hard disk write
                     await CMS.writeToDisk();
                     
                     CMS.renderList();
                     CMS.loadArticle(articleObj.id);
                 } finally {
-                    // Release Execution Lock
                     btn.innerHTML = originalText;
                     btn.disabled = false;
                     lucide.createIcons();
@@ -319,21 +419,19 @@
                 
                 try {
                     const updatedArrayString = JSON.stringify(CMS.articles, null, 4);
-                    // Accurately targeting the array brackets
                     const newHtml = CMS.rawHtml.replace(
                         /const articles = \[\s*[\s\S]*?\s*\];/, 
                         `const articles = ${updatedArrayString};`
                     );
 
-                    // Force flush and overwrite
                     const writable = await CMS.fileHandle.createWritable({ keepExistingData: false });
                     await writable.write(newHtml);
                     await writable.close();
 
                     CMS.rawHtml = newHtml; 
                     
-                    statusEl.innerHTML = `<span class="text-green-400">Synced to blog.html!</span>`;
-                    setTimeout(() => statusEl.innerText = "", 3000);
+                    statusEl.innerHTML = `<span class="text-green-400">Synced! Run push.bat</span>`;
+                    setTimeout(() => statusEl.innerText = "", 4000);
                 } catch(err) {
                     console.error("Disk Write Error:", err);
                     statusEl.innerHTML = `<span class="text-red-500">Save Failed.</span>`;

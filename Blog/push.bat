@@ -25,7 +25,7 @@ git commit -m "%commitMsg%"
 echo [OK] Changes committed.
 
 echo.
-:: Push to the main branch (change 'main' to 'master' if your repo uses master)
+:: Push to the main branch
 git push origin main
 echo [OK] Changes pushed to remote repository.
 
