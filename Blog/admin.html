@@ -5,193 +5,344 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { background-color: #050505; color: #fff; font-family: sans-serif; }
-        .input-field { width: 100%; background: #0F0F0F; border: 1px solid #1F1F1F; padding: 0.75rem; border-radius: 0.5rem; color: white; margin-top: 0.5rem; outline: none; }
-        .input-field:focus { border-color: #FFD02F; }
+        body { background-color: #050505; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
+        .input-field { width: 100%; background: #0a0a0a; border: 1px solid #1F1F1F; padding: 0.85rem; border-radius: 0.75rem; color: white; margin-top: 0.5rem; outline: none; transition: all 0.2s; }
+        .input-field:focus { border-color: #FFD02F; box-shadow: 0 0 10px rgba(255, 208, 47, 0.1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
     </style>
 </head>
-<body class="p-8 pb-32">
+<body class="p-4 md:p-8 h-screen flex flex-col overflow-hidden">
 
-    <div class="max-w-4xl mx-auto">
-        <div class="flex items-center gap-3 mb-8">
-            <span class="w-3 h-3 rounded-full bg-[#FFD02F]"></span>
-            <h1 class="text-3xl font-bold">Content Generator & Auto-Saver</h1>
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8 shrink-0">
+        <div class="flex items-center gap-3">
+            <span class="w-3 h-3 rounded-full bg-[#FFD02F] animate-pulse shadow-[0_0_8px_#FFD02F]"></span>
+            <h1 class="text-2xl font-bold tracking-tight">System Admin</h1>
         </div>
-
-        <p class="text-gray-400 mb-8">Write your blog naturally. Click "Generate", then click "Auto-Save to articles.js" to instantly inject the post into your database.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-                <label class="text-sm text-gray-400 font-bold uppercase tracking-widest">Article Title</label>
-                <input type="text" id="title" class="input-field" placeholder="e.g. Scaling Node.js">
-            </div>
-            <div>
-                <label class="text-sm text-gray-400 font-bold uppercase tracking-widest">Category</label>
-                <select id="category" class="input-field">
-                    <option value="Backend">Backend</option>
-                    <option value="System Design">System Design</option>
-                    <option value="Database">Database</option>
-                    <option value="DevOps">DevOps</option>
-                </select>
-            </div>
-            <div class="md:col-span-2">
-                <label class="text-sm text-gray-400 font-bold uppercase tracking-widest">Short Description</label>
-                <input type="text" id="desc" class="input-field" placeholder="A 2-line summary for the card...">
-            </div>
-            <div class="md:col-span-2">
-                <label class="text-sm text-gray-400 font-bold uppercase tracking-widest">Cover Image</label>
-                <input type="text" id="image" class="input-field" placeholder="./images/my-cover.jpg">
-            </div>
-            <div class="md:col-span-2">
-                <label class="text-sm text-gray-400 font-bold uppercase tracking-widest mb-2 block">Content (Markdown Supported)</label>
-                <textarea id="content" rows="12" class="input-field font-mono text-sm" placeholder="Write your blog post here..."></textarea>
-            </div>
+        <div id="connection-area">
+            <button id="connect-btn" onclick="CMS.connect()" class="bg-white/10 hover:bg-white/20 border border-white/10 text-white px-5 py-2.5 rounded-full font-medium transition-colors flex items-center gap-2 text-sm">
+                <i data-lucide="link" class="w-4 h-4"></i> Select blog.html
+            </button>
         </div>
+    </div>
 
-        <button onclick="generateCode()" class="w-full bg-[#FFD02F] text-black font-bold py-4 rounded-xl hover:bg-yellow-500 transition-colors mb-8">
-            1. Generate Code Snippet
-        </button>
-
-        <div id="output-area" class="hidden">
-            <div class="flex flex-col md:flex-row gap-4 items-center justify-between mb-4 border-t border-[#1F1F1F] pt-8">
-                <h2 class="text-xl font-bold text-green-400">✅ Code Generated!</h2>
-                
-                <button onclick="saveToFile(event)" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition-colors flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                    2. Auto-Save to articles.js
+    <!-- Main Dashboard (Hidden until connected) -->
+    <div id="dashboard" class="hidden flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-0">
+        
+        <!-- Sidebar: Article List -->
+        <div class="lg:col-span-4 flex flex-col bg-[#0a0a0a] border border-[#1F1F1F] rounded-2xl overflow-hidden">
+            <div class="p-4 border-b border-[#1F1F1F] flex justify-between items-center bg-[#050505]">
+                <h2 class="font-semibold text-gray-300 uppercase tracking-widest text-xs">Published Articles</h2>
+                <button onclick="CMS.startNew()" class="text-[#FFD02F] hover:text-white transition-colors p-1" title="New Article">
+                    <i data-lucide="plus-square" class="w-5 h-5"></i>
                 </button>
             </div>
+            <div id="article-list" class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-2">
+                <!-- Articles injected here -->
+            </div>
+        </div>
+
+        <!-- Editor Area -->
+        <div class="lg:col-span-8 flex flex-col bg-[#0a0a0a] border border-[#1F1F1F] rounded-2xl overflow-hidden">
+            <div class="p-4 border-b border-[#1F1F1F] flex justify-between items-center bg-[#050505]">
+                <h2 id="editor-title" class="font-semibold text-gray-300 uppercase tracking-widest text-xs">Create New Article</h2>
+                <div class="flex items-center gap-3">
+                    <span id="save-status" class="text-xs text-gray-500 font-medium"></span>
+                    <button id="save-btn" onclick="CMS.saveArticle()" class="bg-[#FFD02F] text-black hover:bg-yellow-500 px-6 py-2 rounded-full font-bold transition-colors flex items-center gap-2 text-sm shadow-[0_0_15px_rgba(255,208,47,0.3)]">
+                        <i data-lucide="save" class="w-4 h-4"></i> Save & Publish
+                    </button>
+                </div>
+            </div>
             
-            <div class="relative">
-                <button onclick="copyCode(event)" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-bold transition-colors">Copy Manually Instead</button>
-                <pre><code id="result-code" class="block bg-[#0F0F0F] border border-[#1F1F1F] p-6 rounded-xl overflow-x-auto text-sm text-gray-300 font-mono whitespace-pre-wrap"></code></pre>
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-6">
+                <input type="hidden" id="edit-id" value="">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="md:col-span-2">
+                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block">Article Title</label>
+                        <input type="text" id="title" class="input-field text-lg font-medium" placeholder="e.g. Architecting Micro-SaaS...">
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block">Short Description</label>
+                        <input type="text" id="desc" class="input-field" placeholder="A 2-line summary for the card...">
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest block">Cover Image URL</label>
+                        <input type="text" id="image" class="input-field" placeholder="Leave empty for no image, or paste a URL...">
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2 flex justify-between items-center">
+                            <span>Content (Auto-Formatted)</span>
+                            <span class="text-gray-600 font-normal normal-case">Use # for headings. Hit enter twice for paragraphs.</span>
+                        </label>
+                        <textarea id="content" rows="15" class="input-field font-mono text-sm leading-relaxed" placeholder="Write your blog post naturally here..."></textarea>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Custom Lightweight Markdown Parser
-        function parseMarkdownToHTML(md) {
-            let html = md;
-            html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>');
-            html = html.replace(/\`([^`]+)\`/g, '<code>$1</code>');
-            html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-            html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
-            html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-            html = html.split('\n\n').map(p => {
-                const trimmed = p.trim();
-                if (trimmed === '') return '';
-                if (trimmed.startsWith('<pre') || trimmed.startsWith('<h3')) return trimmed;
-                return '<p class="text-xl font-light text-gray-300 mb-8 leading-relaxed">' + trimmed.replace(/\n/g, '<br>') + '</p>';
-            }).filter(p => p !== '').join('\n');
-            return html;
-        }
+        lucide.createIcons();
 
-        function generateCode() {
-            const title = document.getElementById('title').value;
-            const category = document.getElementById('category').value;
-            const desc = document.getElementById('desc').value;
-            const image = document.getElementById('image').value || "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2000&auto=format&fit=crop";
-            const rawContent = document.getElementById('content').value;
-
-            const dateOpts = { year: 'numeric', month: 'short', day: 'numeric' };
-            const today = new Date().toLocaleDateString('en-US', dateOpts);
-            const wordCount = rawContent.split(' ').length;
-            const readTime = Math.max(1, Math.ceil(wordCount / 200)) + " min read";
-            let parsedHTML = parseMarkdownToHTML(rawContent);
-            const safeHTML = parsedHTML.replace(/`/g, '\\`').replace(/\$/g, '\\$');
-
-            const finalCode = 
-            "    {\n" +
-            "        id: " + Date.now() + ",\n" +
-            "        title: \"" + title.replace(/"/g, '\\"') + "\",\n" +
-            "        category: \"" + category + "\",\n" +
-            "        date: \"" + today + "\",\n" +
-            "        readTime: \"" + readTime + "\",\n" +
-            "        desc: \"" + desc.replace(/"/g, '\\"') + "\",\n" +
-            "        image: \"" + image + "\",\n" +
-            "        content: `\n" +
-            "            " + safeHTML + "\n" +
-            "        `\n" +
-            "    },";
-
-            document.getElementById('result-code').textContent = finalCode;
-            document.getElementById('output-area').classList.remove('hidden');
-            setTimeout(() => {
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            }, 100);
-        }
-
-        function copyCode(event) {
-            const code = document.getElementById('result-code').textContent;
-            navigator.clipboard.writeText(code);
-            const btn = event.target;
-            btn.innerText = "Copied!";
-            setTimeout(() => { btn.innerText = "Copy Manually Instead"; }, 2000);
-        }
-
-        // --- NEW AUTO-SAVE LOGIC ---
-        async function saveToFile(event) {
-            const btn = event.target;
-            
-            try {
-                // 1. Ask user to pick the articles.js file
-                const [fileHandle] = await window.showOpenFilePicker({
-                    types: [{
-                        description: 'JavaScript File',
-                        accept: {'text/javascript': ['.js']},
-                    }],
+        // IndexedDB Helper to remember the file handle securely
+        const DB = {
+            init: () => {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open('CMS_DB', 1);
+                    request.onupgradeneeded = (e) => e.target.result.createObjectStore('handles');
+                    request.onsuccess = (e) => resolve(e.target.result);
+                    request.onerror = (e) => reject(e);
                 });
+            },
+            setHandle: async (handle) => {
+                const db = await DB.init();
+                db.transaction('handles', 'readwrite').objectStore('handles').put(handle, 'blogFile');
+            },
+            getHandle: async () => {
+                const db = await DB.init();
+                return new Promise((resolve) => {
+                    const req = db.transaction('handles').objectStore('handles').get('blogFile');
+                    req.onsuccess = () => resolve(req.result);
+                });
+            }
+        };
 
-                // 2. Read the current contents of articles.js
-                const file = await fileHandle.getFile();
-                let content = await file.text();
+        const CMS = {
+            fileHandle: null,
+            rawHtml: "",
+            articles: [],
+            
+            init: async () => {
+                const storedHandle = await DB.getHandle();
+                if (storedHandle) {
+                    CMS.fileHandle = storedHandle;
+                    document.getElementById('connection-area').innerHTML = `
+                        <button onclick="CMS.restoreConnection()" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-full font-medium transition-colors flex items-center gap-2 text-sm shadow-[0_0_15px_rgba(37,99,235,0.3)]">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Restore connection to blog.html
+                        </button>
+                    `;
+                    lucide.createIcons();
+                }
+            },
 
-                // 3. Find the injection point (Right after "const articles = [")
-                const targetText = "const articles = [";
-                const insertIndex = content.indexOf(targetText);
+            connect: async () => {
+                try {
+                    const [handle] = await window.showOpenFilePicker({
+                        types: [{ description: 'HTML File', accept: {'text/html': ['.html']} }],
+                    });
+                    await DB.setHandle(handle);
+                    CMS.fileHandle = handle;
+                    await CMS.loadFile();
+                } catch (err) {
+                    console.error("Connection cancelled or failed:", err);
+                }
+            },
 
-                if (insertIndex === -1) {
-                    alert("Error: Could not find 'const articles = [' in the file. Make sure you selected the correct file.");
+            restoreConnection: async () => {
+                try {
+                    const permission = await CMS.fileHandle.requestPermission({ mode: 'readwrite' });
+                    if (permission === 'granted') {
+                        await CMS.loadFile();
+                    } else {
+                        alert("Permission denied. Please select the file manually.");
+                        document.location.reload();
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+            },
+
+            loadFile: async () => {
+                const file = await CMS.fileHandle.getFile();
+                CMS.rawHtml = await file.text();
+
+                const match = CMS.rawHtml.match(/const articles = (\[[\s\S]*?\]);/);
+                if (!match) {
+                    alert("Could not locate 'const articles = [...]' inside the file. Are you sure this is blog.html?");
                     return;
                 }
 
-                // 4. Inject the new code at the top of the array
-                const newCode = document.getElementById('result-code').textContent;
-                const splitPosition = insertIndex + targetText.length;
+                CMS.articles = new Function("return " + match[1])();
                 
-                const updatedContent = 
-                    content.slice(0, splitPosition) + 
-                    "\n" + newCode + 
-                    content.slice(splitPosition);
+                document.getElementById('connection-area').innerHTML = `
+                    <div class="border border-green-500/30 bg-green-500/10 text-green-400 px-5 py-2.5 rounded-full font-medium flex items-center gap-2 text-sm">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> Connected to ${file.name}
+                    </div>
+                `;
+                document.getElementById('dashboard').classList.remove('hidden');
+                lucide.createIcons();
 
-                // 5. Save the file silently
-                const writable = await fileHandle.createWritable();
-                await writable.write(updatedContent);
-                await writable.close();
+                CMS.renderList();
+                CMS.startNew();
+            },
 
-                // Success UI
-                btn.innerHTML = `✅ Successfully Saved!`;
-                btn.classList.replace("bg-blue-600", "bg-green-600");
-                btn.classList.replace("hover:bg-blue-500", "hover:bg-green-500");
+            renderList: () => {
+                const list = document.getElementById('article-list');
+                list.innerHTML = '';
+                const sorted = [...CMS.articles].sort((a, b) => b.id - a.id);
+                
+                sorted.forEach(article => {
+                    const div = document.createElement('div');
+                    div.className = "p-3 rounded-xl border border-white/5 bg-[#111] hover:bg-white/5 transition-colors cursor-pointer group relative overflow-hidden";
+                    div.innerHTML = `
+                        <div class="pr-8" onclick="CMS.loadArticle(${article.id})">
+                            <h3 class="text-sm font-bold text-white truncate group-hover:text-[#FFD02F] transition-colors">${article.title}</h3>
+                            <p class="text-xs text-gray-500 mt-1">${article.date}</p>
+                        </div>
+                        <button onclick="CMS.deleteArticle(${article.id})" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all bg-[#111] rounded-lg">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    `;
+                    list.appendChild(div);
+                });
+                lucide.createIcons();
+            },
 
-                setTimeout(() => {
-                    btn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> Auto-Save to articles.js`;
-                    btn.classList.replace("bg-green-600", "bg-blue-600");
-                    btn.classList.replace("hover:bg-green-500", "hover:bg-blue-500");
+            startNew: () => {
+                document.getElementById('edit-id').value = "";
+                document.getElementById('title').value = "";
+                document.getElementById('desc').value = "";
+                document.getElementById('image').value = "";
+                document.getElementById('content').value = "";
+                document.getElementById('editor-title').innerText = "Create New Article";
+            },
+
+            loadArticle: (id) => {
+                const article = CMS.articles.find(a => a.id === id);
+                if(!article) return;
+                
+                document.getElementById('edit-id').value = article.id;
+                document.getElementById('title').value = article.title;
+                document.getElementById('desc').value = article.desc;
+                document.getElementById('image').value = article.image || ""; 
+                
+                let editableContent = article.content
+                    .replace(/<h2>/g, '# ')
+                    .replace(/<h3>/g, '## ')
+                    .replace(/<\/h2>|<\/h3>/g, '\n\n')
+                    .replace(/<p>/g, '')
+                    .replace(/<\/p>/g, '\n\n')
+                    .replace(/<br>/g, '\n')
+                    .replace(/<pre><code>/g, '```\n')
+                    .replace(/<\/code><\/pre>/g, '\n```')
+                    .trim();
+
+                document.getElementById('content').value = editableContent;
+                document.getElementById('editor-title').innerText = "Editing: " + article.title;
+            },
+
+            deleteArticle: async (id) => {
+                if(!confirm("Are you sure you want to delete this article?")) return;
+                CMS.articles = CMS.articles.filter(a => a.id !== id);
+                await CMS.writeToDisk();
+                CMS.renderList();
+                CMS.startNew();
+            },
+
+            saveArticle: async () => {
+                const btn = document.getElementById('save-btn');
+                const originalText = btn.innerHTML;
+                
+                // Execution Lock
+                btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Processing...`;
+                btn.disabled = true; 
+
+                try {
+                    const title = document.getElementById('title').value.trim();
+                    if(!title) { alert("Title is required!"); return; }
+
+                    const desc = document.getElementById('desc').value.trim();
                     
-                    // Clear the form for the next post
-                    document.getElementById('title').value = '';
-                    document.getElementById('desc').value = '';
-                    document.getElementById('content').value = '';
-                }, 3000);
+                    // Fixed Image Fallback: Saves exactly what is provided (or empty string)
+                    const image = document.getElementById('image').value.trim();
+                    
+                    const rawContent = document.getElementById('content').value.trim();
+                    const editId = document.getElementById('edit-id').value;
 
-            } catch (err) {
-                // User cancelled the file picker or permission denied
-                console.error(err);
+                    // --- Dynamic Markdown Parser ---
+                    let parsedHTML = rawContent;
+                    
+                    parsedHTML = parsedHTML.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+                    parsedHTML = parsedHTML.replace(/^## (.*$)/gim, '<h3>$1</h3>');
+                    parsedHTML = parsedHTML.replace(/^# (.*$)/gim, '<h2>$1</h2>');
+                    parsedHTML = parsedHTML.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                    parsedHTML = parsedHTML.replace(/\`([^`]+)\`/g, '<code>$1</code>');
+                    
+                    parsedHTML = parsedHTML.split('\n\n').map(p => {
+                        const trimmed = p.trim();
+                        if (trimmed === '') return '';
+                        if (/^<(pre|h2|h3|img|div)/.test(trimmed)) return trimmed;
+                        return '<p>' + trimmed.replace(/\n/g, '<br>') + '</p>';
+                    }).join('');
+
+                    const articleObj = {
+                        id: editId ? parseInt(editId) : Date.now(),
+                        title: title,
+                        desc: desc,
+                        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                        image: image,
+                        content: parsedHTML
+                    };
+
+                    if (editId) {
+                        const index = CMS.articles.findIndex(a => a.id === articleObj.id);
+                        articleObj.date = CMS.articles[index].date; 
+                        CMS.articles[index] = articleObj;
+                    } else {
+                        CMS.articles.unshift(articleObj); 
+                    }
+
+                    // Await the hard disk write
+                    await CMS.writeToDisk();
+                    
+                    CMS.renderList();
+                    CMS.loadArticle(articleObj.id);
+                } finally {
+                    // Release Execution Lock
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    lucide.createIcons();
+                }
+            },
+
+            writeToDisk: async () => {
+                const statusEl = document.getElementById('save-status');
+                statusEl.innerHTML = `<span class="text-[#FFD02F]">Writing to disk...</span>`;
+                
+                try {
+                    const updatedArrayString = JSON.stringify(CMS.articles, null, 4);
+                    // Accurately targeting the array brackets
+                    const newHtml = CMS.rawHtml.replace(
+                        /const articles = \[\s*[\s\S]*?\s*\];/, 
+                        `const articles = ${updatedArrayString};`
+                    );
+
+                    // Force flush and overwrite
+                    const writable = await CMS.fileHandle.createWritable({ keepExistingData: false });
+                    await writable.write(newHtml);
+                    await writable.close();
+
+                    CMS.rawHtml = newHtml; 
+                    
+                    statusEl.innerHTML = `<span class="text-green-400">Synced to blog.html!</span>`;
+                    setTimeout(() => statusEl.innerText = "", 3000);
+                } catch(err) {
+                    console.error("Disk Write Error:", err);
+                    statusEl.innerHTML = `<span class="text-red-500">Save Failed.</span>`;
+                    throw err; 
+                }
             }
-        }
+        };
+
+        document.addEventListener('DOMContentLoaded', CMS.init);
     </script>
 </body>
 </html>
