@@ -18,7 +18,7 @@ echo.
 set /p commitMsg="Enter commit message (Press Enter for 'Auto-update blog content'): "
 
 :: Apply default message if left blank
-if "%commitMsg%"=="" set commitMsg=Auto-update blog content
+if "%commitMsg%"=="" set commitMsg=Save
 
 :: Commit the changes
 git commit -m "%commitMsg%"
