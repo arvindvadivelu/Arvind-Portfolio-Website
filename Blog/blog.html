@@ -1,23 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Untitled</title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
 <html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Technical Blog of Arvind Vadivelu - Insights on Backend Engineering, Microservices, and Scalability.">
-    <title>Arvind Vadivelu | Architecture & Engineering</title>
-    
+    <meta name="description"
+        content="Technical Blog of Arvind Vadivelu - Insights on Backend Engineering, Microservices, and Scalability.">
+    <title>Arvind Vadivelu | Official Blog</title>
+
     <!-- Icons -->
     <link rel="icon" type="image/png" href="/assests/Portfolio Title icon.png">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -73,117 +63,346 @@
     <style>
         /* Apple Reset & Smoothness */
         body {
-            background-color: #050505; color: #f5f5f7;
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-            overscroll-behavior-y: none; position: relative;
+            background-color: #050505;
+            color: #f5f5f7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior-y: none;
+            position: relative;
         }
 
         /* Premium Noise Texture */
         .noise-overlay {
-            position: fixed; top: -50%; left: -50%; right: -50%; bottom: -50%;
-            width: 200%; height: 200%;
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            width: 200%;
+            height: 200%;
             background: transparent url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-            opacity: 0.03; pointer-events: none; z-index: 9990; animation: noise 8s steps(10) infinite;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9990;
+            animation: noise 8s steps(10) infinite;
         }
 
         /* Spotlight Ambient Glow Cards */
-        .glow-card { position: relative; }
+        .glow-card {
+            position: relative;
+        }
+
         .glow-card::before {
-            content: ""; position: absolute; inset: -1px; border-radius: inherit;
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
             background: radial-gradient(600px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(255, 208, 47, 0.25), transparent 40%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: -1; transition: background 0.3s;
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            z-index: -1;
+            transition: background 0.3s;
         }
 
         /* Animated Gradient Border for Hero */
-        .hero-border-wrap { position: relative; border-radius: inherit; overflow: hidden; }
+        .hero-border-wrap {
+            position: relative;
+            border-radius: inherit;
+            overflow: hidden;
+        }
+
         .hero-border-wrap::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
             background: conic-gradient(from 0deg, transparent 0%, transparent 40%, #FFD02F 50%, transparent 60%, transparent 100%);
-            animation: spin-slow 8s linear infinite; z-index: -2; opacity: 0.3;
+            animation: spin-slow 8s linear infinite;
+            z-index: -2;
+            opacity: 0.3;
         }
 
         /* Skeleton Loading Shimmer */
         .skeleton {
-            background: #111; background-image: linear-gradient(to right, #111 0%, #222 20%, #111 40%, #111 100%);
-            background-repeat: no-repeat; background-size: 2000px 100%; animation: shimmer 2s infinite linear forwards;
+            background: #111;
+            background-image: linear-gradient(to right, #111 0%, #222 20%, #111 40%, #111 100%);
+            background-repeat: no-repeat;
+            background-size: 2000px 100%;
+            animation: shimmer 2s infinite linear forwards;
         }
 
         /* 3D Tilt Glare */
         .glare {
-            position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s;
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
-            mix-blend-mode: overlay; z-index: 20;
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            mix-blend-mode: overlay;
+            z-index: 20;
         }
 
         /* Fluid Typography & Prose */
-        .prose { transition: all 0.3s ease; }
-        .prose h2 { font-family: '-apple-system', 'BlinkMacSystemFont', sans-serif; font-weight: 700; color: #fff; margin-top: 3.5rem; margin-bottom: 1.2rem; font-size: clamp(1.5rem, 3vw, 2.2rem); letter-spacing: -0.015em; scroll-margin-top: 100px; }
-        .prose h3 { font-weight: 600; color: #f5f5f7; margin-top: 2.5rem; margin-bottom: 1rem; font-size: clamp(1.25rem, 2vw, 1.5rem); scroll-margin-top: 100px; }
-        .prose p { color: #a1a1a6; margin-bottom: 1.8rem; line-height: 1.75; font-weight: 400; letter-spacing: -0.01em; }
-        .prose strong { color: #fff; font-weight: 600; }
-        
-        .text-size-normal p { font-size: clamp(1.05rem, 1.5vw, 1.25rem); }
-        .text-size-large p { font-size: clamp(1.25rem, 1.8vw, 1.45rem); }
-        .text-size-xlarge p { font-size: clamp(1.45rem, 2vw, 1.7rem); }
+        .prose {
+            transition: all 0.3s ease;
+        }
+
+        .prose h2 {
+            font-family: '-apple-system', 'BlinkMacSystemFont', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 3.5rem;
+            margin-bottom: 1.2rem;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            letter-spacing: -0.015em;
+            scroll-margin-top: 100px;
+        }
+
+        .prose h3 {
+            font-weight: 600;
+            color: #f5f5f7;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: clamp(1.25rem, 2vw, 1.5rem);
+            scroll-margin-top: 100px;
+        }
+
+        .prose p {
+            color: #a1a1a6;
+            margin-bottom: 1.8rem;
+            line-height: 1.75;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .prose strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .text-size-normal p {
+            font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+        }
+
+        .text-size-large p {
+            font-size: clamp(1.25rem, 1.8vw, 1.45rem);
+        }
+
+        .text-size-xlarge p {
+            font-size: clamp(1.45rem, 2vw, 1.7rem);
+        }
 
         /* Advanced Code Blocks & Syntax */
-        .prose pre { background: #111113; padding: 1.5rem; border-radius: 12px; overflow-x: auto; border: 1px solid #222; margin: 2rem 0; position: relative; }
-        .prose code { font-family: theme('fontFamily.mono'); color: #e5e5e5; font-size: 0.9em; }
-        .prose p code { background: #1d1d1f; padding: 0.2em 0.4em; border-radius: 6px; color: #FFD02F; }
-        .syn-keyword { color: #ec4899; font-weight: 500; } .syn-string { color: #34d399; } .syn-boolean { color: #a78bfa; font-weight: 500; } .syn-function { color: #60a5fa; }
+        .prose pre {
+            background: #111113;
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            border: 1px solid #222;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .prose code {
+            font-family: theme('fontFamily.mono');
+            color: #e5e5e5;
+            font-size: 0.9em;
+        }
+
+        .prose p code {
+            background: #1d1d1f;
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            color: #FFD02F;
+        }
+
+        .syn-keyword {
+            color: #ec4899;
+            font-weight: 500;
+        }
+
+        .syn-string {
+            color: #34d399;
+        }
+
+        .syn-boolean {
+            color: #a78bfa;
+            font-weight: 500;
+        }
+
+        .syn-function {
+            color: #60a5fa;
+        }
 
         /* Prose Images (Lightbox target) */
-        .prose img { border-radius: 1rem; margin: 2rem 0; cursor: zoom-in; transition: transform 0.3s; }
-        .prose img:hover { transform: scale(1.01); }
+        .prose img {
+            border-radius: 1rem;
+            margin: 2rem 0;
+            cursor: zoom-in;
+            transition: transform 0.3s;
+        }
+
+        .prose img:hover {
+            transform: scale(1.01);
+        }
 
         /* Glassmorphism */
-        .apple-glass { background: rgba(5, 5, 5, 0.72); backdrop-filter: saturate(180%) blur(30px); -webkit-backdrop-filter: saturate(180%) blur(30px); }
-        .apple-glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.1); }
+        .apple-glass {
+            background: rgba(5, 5, 5, 0.72);
+            backdrop-filter: saturate(180%) blur(30px);
+            -webkit-backdrop-filter: saturate(180%) blur(30px);
+        }
+
+        .apple-glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
         /* Scrollbars */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
 
         /* Native App Animations */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.32, 0.72, 0, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .img-blur-in { filter: blur(20px); transition: filter 1s cubic-bezier(0.32, 0.72, 0, 1), transform 1s ease; }
-        .img-blur-in.loaded { filter: blur(0); }
-        .progress-ring__circle { transition: stroke-dashoffset 0.1s ease-out; transform: rotate(-90deg); transform-origin: 50% 50%; }
-        #main-nav { transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), background 0.4s ease; }
-        .nav-hidden { transform: translateY(-100%); }
-        .magnetic { transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1); will-change: transform; }
-        .toc-link.active { color: #FFD02F; border-left-color: #FFD02F; font-weight: 500; }
-        .animate-pop { animation: pop 0.4s ease-out forwards; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .img-blur-in {
+            filter: blur(20px);
+            transition: filter 1s cubic-bezier(0.32, 0.72, 0, 1), transform 1s ease;
+        }
+
+        .img-blur-in.loaded {
+            filter: blur(0);
+        }
+
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.1s ease-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        #main-nav {
+            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), background 0.4s ease;
+        }
+
+        .nav-hidden {
+            transform: translateY(-100%);
+        }
+
+        .magnetic {
+            transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+            will-change: transform;
+        }
+
+        .toc-link.active {
+            color: #FFD02F;
+            border-left-color: #FFD02F;
+            font-weight: 500;
+        }
+
+        .animate-pop {
+            animation: pop 0.4s ease-out forwards;
+        }
 
         /* Dynamic Island Toast */
         #dynamic-island {
-            position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%) scale(0.9); opacity: 0;
-            background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 9999px;
-            padding: 0.5rem 1rem; z-index: 99999; display: flex; align-items: center; gap: 0.5rem; color: #fff;
-            transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1); pointer-events: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            opacity: 0;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+            pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
-        #dynamic-island.show { transform: translateX(-50%) scale(1); opacity: 1; pointer-events: auto; }
+
+        #dynamic-island.show {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
 
         /* Lightbox */
         #lightbox {
-            position: fixed; inset: 0; z-index: 999999; background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
-            display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.32, 0.72, 0, 1); cursor: zoom-out;
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+            cursor: zoom-out;
         }
-        #lightbox.active { opacity: 1; pointer-events: auto; }
-        #lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); border-radius: 1rem;}
-        #lightbox.active img { transform: scale(1); }
+
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+            border-radius: 1rem;
+        }
+
+        #lightbox.active img {
+            transform: scale(1);
+        }
     </style>
 </head>
 
 <body class="bg-dark-bg text-gray-100 font-sans pb-20 md:pb-0 relative">
-    
+
     <!-- Premium Noise Texture -->
     <div class="noise-overlay"></div>
 
@@ -195,63 +414,86 @@
 
     <!-- Global Top Progress Bar -->
     <div class="fixed top-0 left-0 w-full h-1 z-[70] bg-transparent pointer-events-none">
-        <div id="global-progress" class="h-full bg-signal w-0 transition-all duration-75 ease-out shadow-[0_0_10px_#FFD02F]"></div>
+        <div id="global-progress"
+            class="h-full bg-signal w-0 transition-all duration-75 ease-out shadow-[0_0_10px_#FFD02F]"></div>
     </div>
 
     <!-- Smart Apple Navigation -->
     <nav class="fixed top-0 w-full z-50 border-b border-transparent apple-glass" id="main-nav">
         <div class="max-w-[90rem] mx-auto px-6 h-14 md:h-16 flex items-center justify-between">
-            <a href="/Home.html" class="font-display font-semibold text-lg tracking-tight text-white flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <a href="/Home.html"
+                class="font-display font-semibold text-lg tracking-tight text-white flex items-center gap-2 hover:opacity-80 transition-opacity">
                 <span class="w-2 h-2 rounded-full bg-signal animate-pulse shadow-[0_0_8px_#FFD02F]"></span>
                 ARVIND_V
             </a>
 
             <div class="flex items-center gap-6">
-                <button onclick="Search.open()" class="group flex items-center gap-3 px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors text-sm text-gray-400 hover:text-white border border-transparent hover:border-white/10">
+                <button onclick="Search.open()"
+                    class="group flex items-center gap-3 px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors text-sm text-gray-400 hover:text-white border border-transparent hover:border-white/10">
                     <i data-lucide="search" class="w-4 h-4"></i>
                     <span class="hidden md:inline">Search...</span>
-                    <kbd class="hidden md:inline-block font-mono text-[10px] bg-white/10 px-2 py-0.5 rounded ml-2 text-gray-300">⌘K</kbd>
+                    <kbd
+                        class="hidden md:inline-block font-mono text-[10px] bg-white/10 px-2 py-0.5 rounded ml-2 text-gray-300">⌘K</kbd>
                 </button>
-                <a href="/Home.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors hidden sm:block">Portfolio</a>
+                <a href="/Home.html"
+                    class="text-sm font-medium text-gray-400 hover:text-white transition-colors hidden sm:block">Portfolio</a>
             </div>
         </div>
     </nav>
 
     <!-- MacOS Style Command Palette Search -->
     <div id="search-palette" class="fixed inset-0 z-[100] hidden items-start justify-center pt-[15vh] px-4">
-        <div class="absolute inset-0 bg-black/60 backdrop-blur-xl opacity-0 transition-opacity duration-300" id="search-bg" onclick="Search.close()"></div>
-        <div class="w-full max-w-2xl bg-[#111113]/90 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden relative z-10 opacity-0 transform scale-95 transition-all duration-300" id="search-container">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-xl opacity-0 transition-opacity duration-300"
+            id="search-bg" onclick="Search.close()"></div>
+        <div class="w-full max-w-2xl bg-[#111113]/90 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden relative z-10 opacity-0 transform scale-95 transition-all duration-300"
+            id="search-container">
             <div class="flex items-center px-4 py-4 border-b border-white/5">
                 <i data-lucide="search" class="w-5 h-5 text-signal mr-3"></i>
-                <input type="text" id="search-input" placeholder="Search architecture or concepts..." 
-                    class="w-full bg-transparent border-none text-white text-lg focus:outline-none placeholder-gray-500 font-light" autocomplete="off">
-                <button onclick="Search.close()" class="text-xs text-gray-400 bg-white/5 hover:bg-white/10 hover:text-white px-2 py-1 rounded border border-white/10 ml-2 transition-colors">ESC</button>
+                <input type="text" id="search-input" placeholder="Search architecture or concepts..."
+                    class="w-full bg-transparent border-none text-white text-lg focus:outline-none placeholder-gray-500 font-light"
+                    autocomplete="off">
+                <button onclick="Search.close()"
+                    class="text-xs text-gray-400 bg-white/5 hover:bg-white/10 hover:text-white px-2 py-1 rounded border border-white/10 ml-2 transition-colors">ESC</button>
             </div>
             <div id="search-results" class="max-h-[400px] overflow-y-auto custom-scrollbar p-2 hidden"></div>
-            <div id="search-empty" class="p-8 text-center text-gray-500 hidden font-light">No matching architecture found.</div>
+            <div id="search-empty" class="p-8 text-center text-gray-500 hidden font-light">No matching architecture
+                found.</div>
         </div>
     </div>
 
     <!-- Mobile Bottom Nav -->
-    <nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[45] apple-glass-panel px-8 py-4 rounded-full flex items-center justify-between w-[85%] max-w-sm shadow-[0_20px_40px_rgba(0,0,0,0.9)] border border-white/10">
-        <a href="/Home.html" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="user" class="w-5 h-5"></i></a>
-        <a href="#" class="text-signal transition-colors relative" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <nav
+        class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[45] apple-glass-panel px-8 py-4 rounded-full flex items-center justify-between w-[85%] max-w-sm shadow-[0_20px_40px_rgba(0,0,0,0.9)] border border-white/10">
+        <a href="/Home.html" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="user"
+                class="w-5 h-5"></i></a>
+        <a href="#" class="text-signal transition-colors relative"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
             <i data-lucide="layout-grid" class="w-5 h-5"></i>
-            <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-signal shadow-[0_0_8px_#FFD02F]"></span>
+            <span
+                class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-signal shadow-[0_0_8px_#FFD02F]"></span>
         </a>
-        <button onclick="Search.open()" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="search" class="w-5 h-5"></i></button>
+        <button onclick="Search.open()" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="search"
+                class="w-5 h-5"></i></button>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 md:pt-40 pb-16 md:pb-24 px-6 overflow-hidden flex flex-col items-center justify-center min-h-[45vh]">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-signal/15 rounded-full blur-[120px] pointer-events-none mix-blend-screen"></div>
+    <section
+        class="relative pt-32 md:pt-40 pb-16 md:pb-24 px-6 overflow-hidden flex flex-col items-center justify-center min-h-[45vh]">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] bg-signal/15 rounded-full blur-[120px] pointer-events-none mix-blend-screen">
+        </div>
         <div class="max-w-4xl mx-auto text-center relative z-10 animate-blur-in">
-            <h1 class="font-display font-bold text-5xl md:text-7xl lg:text-[6.5rem] tracking-tighter leading-[1.05] mb-6 text-white drop-shadow-2xl">
+            <h1
+                class="font-display font-bold text-5xl md:text-7xl lg:text-[6.5rem] tracking-tighter leading-[1.05] mb-6 text-white drop-shadow-2xl">
                 Engineering <br />
-                <span class="text-transparent bg-clip-text bg-gradient-to-br from-[#FFD02F] via-[#F59E0B] to-[#92400E]">Without Limits.</span>
+                <span
+                    class="text-transparent bg-clip-text bg-gradient-to-br from-[#FFD02F] via-[#F59E0B] to-[#92400E]">Without
+                    Limits.</span>
             </h1>
-            <p class="text-xl md:text-2xl text-[#a1a1a6] max-w-2xl mx-auto leading-relaxed font-light tracking-tight animate-slide-up" style="animation-delay: 0.2s;">
-                From raw intent to category-defining infrastructure: A deep dive into the anatomy of a new Micro-SaaS idea.
+            <p class="text-xl md:text-2xl text-[#a1a1a6] max-w-2xl mx-auto leading-relaxed font-light tracking-tight animate-slide-up"
+                style="animation-delay: 0.2s;">
+                From raw intent to category-defining infrastructure: A deep dive into the anatomy of a new Micro-SaaS
+                idea.
             </p>
         </div>
     </section>
@@ -259,7 +501,8 @@
     <!-- Dynamic Articles Grid (Skeleton -> Auto-Adjusting & Spotlight) -->
     <section class="px-4 md:px-8 pb-32">
         <div class="max-w-[90rem] mx-auto">
-            <div id="hero-article-container" class="mb-8 md:mb-12 hero-border-wrap" onmousemove="Engine.handleGlow(event, this)" onmouseleave="Engine.resetGlow(this)">
+            <div id="hero-article-container" class="mb-8 md:mb-12 hero-border-wrap"
+                onmousemove="Engine.handleGlow(event, this)" onmouseleave="Engine.resetGlow(this)">
                 <!-- Skeleton Loader Hero -->
                 <div class="w-full h-[50vh] md:h-[70vh] rounded-[2rem] md:rounded-[3rem] skeleton"></div>
             </div>
@@ -272,7 +515,7 @@
         </div>
     </section>
 
- 
+
 
     <!-- Footer -->
     <footer class="bg-[#000] text-[#a1a1a6] pt-16 pb-24 md:pb-12 border-t border-white/5">
@@ -282,13 +525,19 @@
                     <h2 class="font-display font-bold text-2xl tracking-tight text-white mb-2 flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-signal"></span>Arvind Vadivelu
                     </h2>
-                    <p class="font-light text-sm leading-relaxed mb-4">Building category-defining digital infrastructure and solving real-world problems through Micro-SaaS.</p>
+                    <p class="font-light text-sm leading-relaxed mb-4">Building category-defining digital infrastructure
+                        and solving real-world problems through Micro-SaaS.</p>
                 </div>
                 <div class="flex flex-col md:text-right gap-1">
-                    <a href="mailto:varvind2004@gmail.com" class="text-white font-medium hover:text-signal transition-colors">varvind2004@gmail.com</a>
+                    <a href="mailto:varvind2004@gmail.com"
+                        class="text-white font-medium hover:text-signal transition-colors">varvind2004@gmail.com</a>
                     <div class="flex gap-4 mt-3 md:justify-end">
-                        <a href="https://linkedin.com/in/arvindvadivelu" target="_blank" class="magnetic w-12 h-12 rounded-full bg-[#111113] flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors border border-white/5"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-                        <a href="https://github.com/Arvindvadivelu" target="_blank" class="magnetic w-12 h-12 rounded-full bg-[#111113] flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors border border-white/5"><i data-lucide="github" class="w-5 h-5"></i></a>
+                        <a href="https://linkedin.com/in/arvindvadivelu" target="_blank"
+                            class="magnetic w-12 h-12 rounded-full bg-[#111113] flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors border border-white/5"><i
+                                data-lucide="linkedin" class="w-5 h-5"></i></a>
+                        <a href="https://github.com/Arvindvadivelu" target="_blank"
+                            class="magnetic w-12 h-12 rounded-full bg-[#111113] flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors border border-white/5"><i
+                                data-lucide="github" class="w-5 h-5"></i></a>
                     </div>
                 </div>
             </div>
@@ -300,50 +549,67 @@
 
     <!-- Level 70 Native iOS App-Style Full-Bleed Reader Modal -->
     <div id="reader-modal" class="fixed inset-0 z-[200] hidden">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-xl opacity-0 transition-opacity duration-500" id="reader-bg" onclick="Reader.close()"></div>
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-xl opacity-0 transition-opacity duration-500"
+            id="reader-bg" onclick="Reader.close()"></div>
 
         <!-- Scrollable Full-Page Wrapper -->
         <div class="absolute inset-0 md:inset-x-[10%] md:top-4 flex gap-6" id="reader-wrapper">
-            
+
             <!-- Main Content Sheet -->
-            <div class="flex-1 bg-[#050505] md:rounded-t-[2.5rem] shadow-[0_0_50px_rgba(0,0,0,1)] transform translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col overflow-hidden border-x border-t border-white/10 relative" id="reader-content">
-                
+            <div class="flex-1 bg-[#050505] md:rounded-t-[2.5rem] shadow-[0_0_50px_rgba(0,0,0,1)] transform translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] flex flex-col overflow-hidden border-x border-t border-white/10 relative"
+                id="reader-content">
+
                 <!-- Fixed Top Nav (Glass Overlap) -->
-                <div class="absolute top-0 inset-x-0 flex justify-between items-center px-4 md:px-6 py-4 z-50 pointer-events-none bg-gradient-to-b from-black/60 via-black/30 to-transparent">
-                    <button onclick="Reader.close()" class="w-10 h-10 rounded-full apple-glass-panel flex items-center justify-center text-white pointer-events-auto hover:bg-white/20 transition-all border border-white/10 backdrop-blur-xl shadow-lg group">
-                        <i data-lucide="chevron-down" class="w-5 h-5 group-hover:translate-y-0.5 transition-transform"></i>
+                <div
+                    class="absolute top-0 inset-x-0 flex justify-between items-center px-4 md:px-6 py-4 z-50 pointer-events-none bg-gradient-to-b from-black/60 via-black/30 to-transparent">
+                    <button onclick="Reader.close()"
+                        class="w-10 h-10 rounded-full apple-glass-panel flex items-center justify-center text-white pointer-events-auto hover:bg-white/20 transition-all border border-white/10 backdrop-blur-xl shadow-lg group">
+                        <i data-lucide="chevron-down"
+                            class="w-5 h-5 group-hover:translate-y-0.5 transition-transform"></i>
                     </button>
                 </div>
 
                 <!-- Scroll Area (rAF Optimized) -->
                 <div class="flex-1 overflow-y-auto custom-scrollbar" id="reader-scroll-area">
-                    
+
                     <!-- Immersive 60vh Hero Header -->
                     <div class="relative w-full h-[60vh] overflow-hidden shrink-0">
-                        <img id="modal-image" src="" class="w-full h-[120%] object-cover img-blur-in parallax-modal transform -translate-y-10" onload="this.classList.add('loaded')">
-                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/40 to-[#050505]"></div>
+                        <img id="modal-image" src=""
+                            class="w-full h-[120%] object-cover img-blur-in parallax-modal transform -translate-y-10"
+                            onload="this.classList.add('loaded')">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/40 to-[#050505]">
+                        </div>
                     </div>
 
                     <!-- Text Content -->
                     <div class="px-6 md:px-16 -mt-24 relative z-10 pb-40 max-w-4xl mx-auto">
-                        <h1 id="modal-title" class="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-[1.1] tracking-tight drop-shadow-lg"></h1>
-                        
+                        <h1 id="modal-title"
+                            class="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-[1.1] tracking-tight drop-shadow-lg">
+                        </h1>
+
                         <div class="flex items-center justify-between mb-12 pb-6 border-b border-white/10">
                             <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full bg-[#111] flex items-center justify-center text-signal font-semibold border border-white/10 shadow-inner">AV</div>
+                                <div
+                                    class="w-12 h-12 rounded-full bg-[#111] flex items-center justify-center text-signal font-semibold border border-white/10 shadow-inner">
+                                    AV</div>
                                 <div>
                                     <div class="text-white font-medium">Arvind Vadivelu</div>
                                     <div class="text-sm text-gray-400 font-light flex items-center gap-2">
                                         <span id="modal-date"></span> &middot; <span id="modal-readtime"></span>
-                                        <span id="modal-time-left" class="text-signal font-medium ml-2 opacity-0 transition-opacity"></span>
+                                        <span id="modal-time-left"
+                                            class="text-signal font-medium ml-2 opacity-0 transition-opacity"></span>
                                     </div>
                                 </div>
                             </div>
                             <!-- Circular Progress Near Author -->
                             <div class="relative w-12 h-12 flex items-center justify-center hidden sm:flex">
                                 <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40" fill="transparent"></circle>
-                                    <circle id="modal-progress-ring" class="text-signal stroke-current" stroke-width="6" stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.1s ease-out;"></circle>
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="transparent"></circle>
+                                    <circle id="modal-progress-ring" class="text-signal stroke-current" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="251.2"
+                                        style="transition: stroke-dashoffset 0.1s ease-out;"></circle>
                                 </svg>
                                 <i data-lucide="book-open" class="absolute w-4 h-4 text-white"></i>
                             </div>
@@ -354,22 +620,34 @@
                 </div>
 
                 <!-- Floating Glass Action Bar (Level 70) -->
-                <div id="floating-action-bar" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] z-50 pointer-events-none">
-                    <div class="pointer-events-auto apple-glass-panel rounded-full p-2 border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] flex items-center gap-2 backdrop-blur-2xl bg-black/40">
-                        <button onclick="Reader.cycleTextSize()" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Adjust Text Size">
+                <div id="floating-action-bar"
+                    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] z-50 pointer-events-none">
+                    <div
+                        class="pointer-events-auto apple-glass-panel rounded-full p-2 border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] flex items-center gap-2 backdrop-blur-2xl bg-black/40">
+                        <button onclick="Reader.cycleTextSize()"
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                            title="Adjust Text Size">
                             <span class="font-serif font-bold tracking-tighter text-[1.1rem]">aA</span>
                         </button>
-                        <button onclick="Reader.toggleAudio()" id="btn-audio" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Listen">
+                        <button onclick="Reader.toggleAudio()" id="btn-audio"
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                            title="Listen">
                             <i data-lucide="play" class="w-4.5 h-4.5" id="icon-audio"></i>
                         </button>
-                        <button onclick="Reader.toggleLike()" id="btn-like" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Appreciate">
+                        <button onclick="Reader.toggleLike()" id="btn-like"
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                            title="Appreciate">
                             <i data-lucide="heart" class="w-4.5 h-4.5" id="icon-like"></i>
                         </button>
-                        <button onclick="Reader.toggleBookmark()" id="btn-bookmark" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Save">
+                        <button onclick="Reader.toggleBookmark()" id="btn-bookmark"
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                            title="Save">
                             <i data-lucide="bookmark" class="w-4.5 h-4.5" id="icon-bookmark"></i>
                         </button>
                         <div class="w-px h-6 bg-white/20 mx-1"></div>
-                        <button onclick="Reader.share()" class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all" title="Share">
+                        <button onclick="Reader.share()"
+                            class="w-10 h-10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-all"
+                            title="Share">
                             <i data-lucide="share" class="w-4.5 h-4.5"></i>
                         </button>
                     </div>
@@ -378,10 +656,12 @@
             </div>
 
             <!-- Table of Contents Sidebar (Desktop Only) -->
-            <div class="hidden xl:flex flex-col w-64 pt-24 pr-4 transform translate-x-12 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]" id="reader-toc-panel">
+            <div class="hidden xl:flex flex-col w-64 pt-24 pr-4 transform translate-x-12 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
+                id="reader-toc-panel">
                 <div class="sticky top-24">
                     <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">On this page</h4>
-                    <nav id="modal-toc" class="flex flex-col border-l border-white/10 text-sm font-light space-y-1 relative"></nav>
+                    <nav id="modal-toc"
+                        class="flex flex-col border-l border-white/10 text-sm font-light space-y-1 relative"></nav>
                 </div>
             </div>
         </div>
@@ -395,15 +675,15 @@
     <!-- Article Data -->
     <script>
         const articles = [
-    {
-        "id": 1783153414622,
-        "title": "Kill Scope Creep with 1 Simple Slack Hack",
-        "desc": "Are You Bleeding Agency Profits? How 1 Simple Slack Hack Kills Scope Creep Instantly!",
-        "date": "July 4, 2026",
-        "image": "https://cdn.prod.website-files.com/659f998703a2ed0a7f69f3b8/6913a208741307a2d339ea6f_unnamed%20(36).jpg",
-        "content": "<h2>Every agency founder knows the silent killer of profit margins: <strong>Scope Creep</strong>. You are faced with a toxic dilemma: awkwardly demand more money, or swallow the extra work for free. </h2><p>Enter a Micro-SaaS workflow that eliminates the human anxiety of asking for money and turns casual Slack requests into instant, paid revenue.</p><img src='https://www.vtmarkets.com/en-mena/wp-content/uploads/sites/7/2026/06/discover-1-1024x559.webp' alt='ScopeSnap Bot Interface and Dashboard'><h3>The Tech Stack (Optimized for Solo Devs)</h3><p>*   <strong>Backend:</strong> Next.js (API Routes) + Slack Bolt framework (Node.js)<br>*   <strong>Database & Auth:</strong> Supabase (PostgreSQL)<br>*   <strong>Frontend:</strong> Next.js (React) + TailwindCSS + Shadcn-UI<br>*   <strong>Payments:</strong> Stripe API (Payment Links and Invoicing)<br>*   <strong>Hosting:</strong> Vercel</p><h3>The 5-Step Core Workflow</h3><p>1.  <strong>The Trigger:</strong> The client casually requests extra work in your shared Slack channel.</p><p>2.  <strong>The Action:</strong> The Project Manager (PM) clicks the \"More Actions\" menu on the message and triggers the bot.</p><p>3.  <strong>The Input:</strong> A private modal pops up for the PM to input the cost (e.g., $150) and time added (e.g., +1 day).</p><p>4.  <strong>The Output:</strong> The bot instantly replies in the main channel with a professional card: *\"Cost: $150. Impact: +1 Day. [🟢 Approve & Pay] [🔴 Decline]\"*</p><p>5.  <strong>The Resolution:</strong> If approved, the client is routed to a Stripe Checkout link. If declined, the bot politely notes the original plan remains intact.</p><h3>The Psychology of Winning</h3><p>PMs hate saying, \"That will cost extra.\" By turning the billing process into a standardized, bot-driven button click, you shift the blame from the human to \"the process.\" The client makes a frictionless binary choice—saving you hours of unpaid labor without any awkward negotiation.</p>"
-    }
-];
+            {
+                "id": 1783153414622,
+                "title": "Kill Scope Creep with 1 Simple Slack Hack",
+                "desc": "Are You Bleeding Agency Profits? How 1 Simple Slack Hack Kills Scope Creep Instantly!",
+                "date": "July 4, 2026",
+                "image": "https://cdn.prod.website-files.com/659f998703a2ed0a7f69f3b8/6913a208741307a2d339ea6f_unnamed%20(36).jpg",
+                "content": "<h2>Every agency founder knows the silent killer of profit margins: <strong>Scope Creep</strong>. You are faced with a toxic dilemma: awkwardly demand more money, or swallow the extra work for free. </h2><p>Enter a Micro-SaaS workflow that eliminates the human anxiety of asking for money and turns casual Slack requests into instant, paid revenue.</p><img src='https://www.vtmarkets.com/en-mena/wp-content/uploads/sites/7/2026/06/discover-1-1024x559.webp' alt='ScopeSnap Bot Interface and Dashboard'>## The Tech Stack (Optimized for Solo Devs)<p>*   <strong>Backend:</strong> Next.js (API Routes) + Slack Bolt framework (Node.js)<br>*   <strong>Database & Auth:</strong> Supabase (PostgreSQL)<br>*   <strong>Frontend:</strong> Next.js (React) + TailwindCSS + Shadcn-UI<br>*   <strong>Payments:</strong> Stripe API (Payment Links and Invoicing)<br>*   <strong>Hosting:</strong> Vercel</p><h3>The 5-Step Core Workflow</h3><p>1.  <strong>The Trigger:</strong> The client casually requests extra work in your shared Slack channel.</p><p>2.  <strong>The Action:</strong> The Project Manager (PM) clicks the \"More Actions\" menu on the message and triggers the bot.</p><p>3.  <strong>The Input:</strong> A private modal pops up for the PM to input the cost (e.g., $150) and time added (e.g., +1 day).</p><p>4.  <strong>The Output:</strong> The bot instantly replies in the main channel with a professional card: *\"Cost: $150. Impact: +1 Day. [🟢 Approve & Pay] [🔴 Decline]\"*</p><p>5.  <strong>The Resolution:</strong> If approved, the client is routed to a Stripe Checkout link. If declined, the bot politely notes the original plan remains intact.</p><h3>The Psychology of Winning</h3><p>PMs hate saying, \"That will cost extra.\" By turning the billing process into a standardized, bot-driven button click, you shift the blame from the human to \"the process.\" The client makes a frictionless binary choice—saving you hours of unpaid labor without any awkward negotiation.</p>"
+            }
+        ];
     </script>
 
     <!-- Core Logic (Vanilla JS) Level 70 Edition -->
@@ -469,21 +749,21 @@
             const current = window.pageYOffset;
             const height = document.documentElement.scrollHeight - window.innerHeight;
             const nav = document.getElementById('main-nav');
-            
+
             // Progress Bar
-            if(height > 0) document.getElementById('global-progress').style.width = `${(current / height) * 100}%`;
-            
+            if (height > 0) document.getElementById('global-progress').style.width = `${(current / height) * 100}%`;
+
             // Smart Nav
             if (current <= 0) { nav.classList.remove('nav-hidden'); nav.classList.replace('apple-glass', 'bg-transparent'); nav.classList.replace('border-white/10', 'border-transparent'); }
             else if (current > 50) { nav.classList.replace('bg-transparent', 'apple-glass'); nav.classList.replace('border-transparent', 'border-white/10'); }
-            
+
             if (current > lastScroll && !nav.classList.contains('nav-hidden') && current > 100) nav.classList.add('nav-hidden');
             else if (current < lastScroll && nav.classList.contains('nav-hidden')) nav.classList.remove('nav-hidden');
-            
+
             // Parallax Hero (Main Page)
             const heroImg = document.querySelector('.parallax-hero');
             if (heroImg && current < window.innerHeight) heroImg.style.transform = `translateY(${current * 0.4}px)`;
-            
+
             lastScroll = current;
         }
 
@@ -495,7 +775,7 @@
                     Engine.setupScrollReveal();
                     Engine.setupMagneticButtons();
                     lucide.createIcons();
-                }, 800); 
+                }, 800);
             },
             handleGlow: (e, element) => {
                 const rect = element.getBoundingClientRect();
@@ -506,14 +786,14 @@
                 element.style.setProperty('--mouse-x', `-500px`); element.style.setProperty('--mouse-y', `-500px`);
             },
             renderArticles: (data) => {
-                if(data.length === 0) return;
+                if (data.length === 0) return;
                 const heroContainer = document.getElementById('hero-article-container');
                 const gridContainer = document.getElementById('articles-grid');
                 const hero = data[0];
-                
+
                 heroContainer.innerHTML = '';
                 heroContainer.className = "glow-card reveal group cursor-pointer rounded-[2rem] md:rounded-[3rem] p-[1px] relative hero-border-wrap";
-                
+
                 heroContainer.innerHTML = `
                     <div class="relative w-full h-[50vh] md:h-[70vh] rounded-[inherit] overflow-hidden bg-[#111] z-10" onclick="Reader.open(${hero.id})">
                         <img src="${hero.image}" class="parallax-hero absolute inset-0 w-full h-[120%] -top-[10%] object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)] opacity-70 group-hover:opacity-90">
@@ -576,14 +856,14 @@
                         const x = e.clientX - rect.left, y = e.clientY - rect.top;
                         const cx = rect.width / 2, cy = rect.height / 2;
                         imgContainer.style.transform = `perspective(1000px) rotateX(${((y - cy) / cy) * -4}deg) rotateY(${((x - cx) / cx) * 4}deg) scale3d(1.02, 1.02, 1.02)`;
-                        if(glare) {
+                        if (glare) {
                             glare.style.opacity = '1';
                             glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, transparent 60%)`;
                         }
                     });
                     card.addEventListener('mouseleave', () => {
                         imgContainer.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-                        if(glare) glare.style.opacity = '0';
+                        if (glare) glare.style.opacity = '0';
                     });
                 });
             }
@@ -612,19 +892,19 @@
 
             open: (id) => {
                 Reader.currentArticle = articles.find(a => a.id === id);
-                if(!Reader.currentArticle) return;
+                if (!Reader.currentArticle) return;
 
                 Reader.totalMins = Utils.calculateReadTime(Reader.currentArticle.content);
                 document.getElementById('modal-title').innerText = Reader.currentArticle.title;
                 document.getElementById('modal-date').innerText = Reader.currentArticle.date;
                 document.getElementById('modal-readtime').innerText = `${Reader.totalMins} min read`;
                 document.getElementById('modal-time-left').style.opacity = '0';
-                
+
                 const img = document.getElementById('modal-image');
                 img.classList.remove('loaded');
-                img.style.transform = 'translateY(-10px)'; 
+                img.style.transform = 'translateY(-10px)';
                 img.src = Reader.currentArticle.image;
-                
+
                 Reader.bodyContainer.innerHTML = Reader.currentArticle.content;
                 Reader.setupCodeBlocks(Reader.bodyContainer);
                 Reader.generateToC(Reader.bodyContainer);
@@ -633,7 +913,7 @@
                 Reader.resetAudio();
 
                 Reader.modal.classList.remove('hidden');
-                
+
                 // View Transitions (Spring feel)
                 setTimeout(() => {
                     Reader.bg.classList.remove('opacity-0');
@@ -641,8 +921,8 @@
                     Reader.tocPanel.classList.remove('translate-x-12', 'opacity-0');
                     Reader.floatingBar.classList.remove('translate-y-24', 'opacity-0');
                 }, 10);
-                
-                document.body.style.overflow = 'hidden'; 
+
+                document.body.style.overflow = 'hidden';
                 Reader.scrollArea.scrollTop = 0;
                 Reader.handleScroll();
             },
@@ -662,12 +942,12 @@
 
             handleScroll: () => {
                 const scrollHeight = Reader.scrollArea.scrollHeight - Reader.scrollArea.clientHeight;
-                if(scrollHeight <= 0) return;
+                if (scrollHeight <= 0) return;
                 const scrollPos = Reader.scrollArea.scrollTop;
                 const progress = scrollPos / scrollHeight;
-                
+
                 Reader.progressRing.style.strokeDashoffset = 251.2 - (progress * 251.2);
-                
+
                 const timeLeftEl = document.getElementById('modal-time-left');
                 if (progress > 0.05 && progress < 0.95) {
                     timeLeftEl.innerText = `(${Math.max(1, Math.ceil(Reader.totalMins * (1 - progress)))} min left)`;
@@ -675,17 +955,17 @@
                 } else { timeLeftEl.style.opacity = '0'; }
 
                 const modalImg = document.querySelector('.parallax-modal');
-                if(modalImg && scrollPos < window.innerHeight) {
+                if (modalImg && scrollPos < window.innerHeight) {
                     modalImg.style.transform = `translateY(${(scrollPos * 0.4) - 10}px)`;
                 }
-                
+
                 let currentId = null;
                 Reader.bodyContainer.querySelectorAll('h2, h3').forEach(h => {
-                    if(h.offsetTop - 150 <= scrollPos) currentId = h.id;
+                    if (h.offsetTop - 150 <= scrollPos) currentId = h.id;
                 });
                 Reader.tocContainer.querySelectorAll('a').forEach(a => {
                     a.classList.remove('active');
-                    if(currentId && a.getAttribute('href') === `#${currentId}`) a.classList.add('active');
+                    if (currentId && a.getAttribute('href') === `#${currentId}`) a.classList.add('active');
                 });
             },
 
@@ -715,7 +995,7 @@
                     pre.appendChild(btn);
 
                     const code = pre.querySelector('code');
-                    if(code) {
+                    if (code) {
                         code.innerHTML = code.innerHTML
                             .replace(/\b(const|let|var|def|function|return|if|else|for|while|class|import|from)\b/g, '<span class="syn-keyword">$1</span>')
                             .replace(/\b(true|false|null|True|False)\b/g, '<span class="syn-boolean">$1</span>')
@@ -726,10 +1006,10 @@
             },
 
             toggleBookmark: () => {
-                if(!Reader.currentArticle) return;
+                if (!Reader.currentArticle) return;
                 let bms = JSON.parse(localStorage.getItem('av_bookmarks') || '[]');
                 const idx = bms.indexOf(Reader.currentArticle.id);
-                if (idx === -1) { bms.push(Reader.currentArticle.id); Toast.show('Saved to Bookmarks', 'bookmark', 'text-signal'); } 
+                if (idx === -1) { bms.push(Reader.currentArticle.id); Toast.show('Saved to Bookmarks', 'bookmark', 'text-signal'); }
                 else { bms.splice(idx, 1); Toast.show('Removed from Bookmarks', 'bookmark-minus', 'text-gray-400'); }
                 localStorage.setItem('av_bookmarks', JSON.stringify(bms));
                 Reader.updateIcons();
@@ -737,10 +1017,10 @@
             },
 
             toggleLike: () => {
-                if(!Reader.currentArticle) return;
+                if (!Reader.currentArticle) return;
                 let likes = JSON.parse(localStorage.getItem('av_likes') || '[]');
                 const idx = likes.indexOf(Reader.currentArticle.id);
-                if (idx === -1) { likes.push(Reader.currentArticle.id); Toast.show('Appreciation sent', 'heart', 'text-red-500'); } 
+                if (idx === -1) { likes.push(Reader.currentArticle.id); Toast.show('Appreciation sent', 'heart', 'text-red-500'); }
                 else { likes.splice(idx, 1); }
                 localStorage.setItem('av_likes', JSON.stringify(likes));
                 Reader.updateIcons();
@@ -755,17 +1035,17 @@
             },
 
             updateIcons: () => {
-                if(!Reader.currentArticle) return;
+                if (!Reader.currentArticle) return;
                 const id = Reader.currentArticle.id;
-                
+
                 const bms = JSON.parse(localStorage.getItem('av_bookmarks') || '[]');
                 const iconBm = document.getElementById('icon-bookmark');
-                if (bms.includes(id)) { iconBm.classList.add('fill-signal', 'text-signal'); iconBm.classList.remove('text-white'); } 
+                if (bms.includes(id)) { iconBm.classList.add('fill-signal', 'text-signal'); iconBm.classList.remove('text-white'); }
                 else { iconBm.classList.remove('fill-signal', 'text-signal'); iconBm.classList.add('text-white'); }
 
                 const likes = JSON.parse(localStorage.getItem('av_likes') || '[]');
                 const iconLike = document.getElementById('icon-like');
-                if (likes.includes(id)) { iconLike.classList.add('fill-red-500', 'text-red-500'); iconLike.classList.remove('text-white'); } 
+                if (likes.includes(id)) { iconLike.classList.add('fill-red-500', 'text-red-500'); iconLike.classList.remove('text-white'); }
                 else { iconLike.classList.remove('fill-red-500', 'text-red-500'); iconLike.classList.add('text-white'); }
             },
 
@@ -787,7 +1067,7 @@
                     Toast.show('Audio stopped', 'square');
                     return;
                 }
-                if(!Reader.currentArticle) return;
+                if (!Reader.currentArticle) return;
                 const text = `${Reader.currentArticle.title}. ${Utils.stripHtml(Reader.currentArticle.content)}`;
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.onend = () => Reader.resetAudio();
@@ -796,16 +1076,16 @@
                 Toast.show('Playing audio...', 'volume-2');
             },
             resetAudio: () => {
-                if(Reader.speechSynth) Reader.speechSynth.cancel();
+                if (Reader.speechSynth) Reader.speechSynth.cancel();
                 const icon = document.getElementById('icon-audio');
-                if(icon) { icon.setAttribute('data-lucide', 'play'); lucide.createIcons(); }
+                if (icon) { icon.setAttribute('data-lucide', 'play'); lucide.createIcons(); }
             },
             share: async () => {
                 if (!Reader.currentArticle) return;
-                try { if (navigator.share) await navigator.share({ title: Reader.currentArticle.title, text: Utils.stripHtml(Reader.currentArticle.desc), url: window.location.href }); } catch (err) {}
+                try { if (navigator.share) await navigator.share({ title: Reader.currentArticle.title, text: Utils.stripHtml(Reader.currentArticle.desc), url: window.location.href }); } catch (err) { }
             }
         };
-        
+
         // Initialize Modal Scroll Event
         Reader.initScroll();
 
@@ -826,9 +1106,9 @@
             handleInput: (e) => {
                 const query = e.target.value.toLowerCase();
                 const resArea = document.getElementById('search-results'), empty = document.getElementById('search-empty');
-                if(!query) { resArea.classList.add('hidden'); empty.classList.add('hidden'); return; }
+                if (!query) { resArea.classList.add('hidden'); empty.classList.add('hidden'); return; }
                 const results = articles.filter(a => a.title.toLowerCase().includes(query) || a.desc.toLowerCase().includes(query) || a.content.toLowerCase().includes(query));
-                if (results.length === 0) { resArea.classList.add('hidden'); empty.classList.remove('hidden'); } 
+                if (results.length === 0) { resArea.classList.add('hidden'); empty.classList.remove('hidden'); }
                 else {
                     empty.classList.add('hidden'); resArea.classList.remove('hidden');
                     resArea.innerHTML = results.map(a => `
@@ -848,22 +1128,26 @@
         document.addEventListener('keydown', (e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); Search.open(); } if (e.key === 'Escape') { Search.close(); Reader.close(); Lightbox.close(); } });
 
         // 6. NEWSLETTER
-        document.getElementById('newsletter-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('newsletter-btn'), input = document.getElementById('newsletter-input');
-            btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin text-black"></i>`; lucide.createIcons();
-            setTimeout(() => { 
-                input.value = ''; btn.innerHTML = `Subscribe`; 
-                Toast.show('Subscribed to stream successfully', 'check-circle');
-            }, 1000);
-        });
+        // 6. NEWSLETTER
+        const newsletterForm = document.getElementById('newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('newsletter-btn'), input = document.getElementById('newsletter-input');
+                btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin text-black"></i>`; lucide.createIcons();
+                setTimeout(() => {
+                    input.value = ''; btn.innerHTML = `Subscribe`;
+                    Toast.show('Subscribed to stream successfully', 'check-circle');
+                }, 1000);
+            });
+        }
+
+        // Boot
+        document.addEventListener('DOMContentLoaded', Engine.init);
 
         // Boot
         document.addEventListener('DOMContentLoaded', Engine.init);
     </script>
 </body>
-</html>
-    
-  </body>
-  
+
 </html>
